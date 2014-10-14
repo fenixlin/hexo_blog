@@ -20,15 +20,15 @@ $ ssh -T git@github.com
 $ git config --global user.name "lazyowl"
 $ git config --global user.email "lazylazyowl@gmail.com"
 ```
-2. 常用的github命令:
+2. 常用的github命令(创建目录时好像不得不上网创):
 ``` bash
 $ git clone https://github.com/lazyowl/hexo_blog
 $ git init
 $ git status
 $ git add -A
 $ git commit -a
-$ git remote add origin git@github.com:lazyowl/hexo_blog.git
-$ git push origin master
+$ git remote add origin https://github.com/lazyowl/hexo_blog
+$ git push -u origin master
 ```
 
 # Hexo下载与设置
