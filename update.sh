@@ -11,3 +11,6 @@ hexo clean
 hexo generate
 hexo deploy
 
+git add -A
+git commit -a
+git push -u oigin master
