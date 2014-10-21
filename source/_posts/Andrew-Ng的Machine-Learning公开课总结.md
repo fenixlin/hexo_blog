@@ -14,10 +14,8 @@ Tom Mitchell(1998)指出机器学习最重要的三个概念：Task（概括性�
 有监督学习可以做分类和估值。
 ###线性回归
 线性回归已经假设真实函数(目标函数)是线性的。
-$$
-h_\theta(\mathbf{x_i}) = \mathbf{\theta}^T\mathbf{x}_i + \mathbf{\epsilon}
-$$
+$$ h_\theta(\mathbf{x_i}) = \mathbf{\theta}^T\mathbf{x}_i + \mathbf{\epsilon} $$
+
 用到的cost function:
-$$
-J(\mathbf{\theta}) = \frac{1}{2m}\sum_{i=1}^{m}(h_\theta(\mathbf{x_i})-\mathbf{y}_i)^2
-$$
+
+$$ J(\mathbf{\theta}) = \frac{1}{2m}\sum_{i=1}^{m}(h_\theta(\mathbf{x_i})-\mathbf{y}_i)^2 $$
