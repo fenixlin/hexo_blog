@@ -13,4 +13,4 @@ hexo deploy
 
 git add -A
 git commit -a
-git push -u oigin master
+git push -u origin master
