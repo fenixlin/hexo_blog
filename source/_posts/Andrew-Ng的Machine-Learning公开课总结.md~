@@ -4,12 +4,6 @@ tags:
 date: 2014-10-18 20:55:18
 catagories:
 ---
-title: Andrew Ng的Machine Learning公开课总结
-tags:
-  - Machine Learning
-date: 2014-10-18 20:55:18
-catagories:
----
 
 Tom Mitchell(1998)指出机器学习最重要的三个概念：Task（概括性的目标……），Performance(衡量指标)，Experience(训练过程)
 这门课上提到的算法都是静态的。只着眼于一次采样。要通过一次训练尽可能好地拟合真实函数。
@@ -32,9 +26,7 @@ $\mathbf{\theta} = (\mathbf{X}^T\mathbf{X}+\lambda\mathbf{1}\_{-0})^{-1}\mathbf{
 
 **逻辑回归**
 分类用，给回归函数套一个函数，保证值域是[0,1] : 
-$h\_\theta(\mathbf{x}\_i) = sigmoid(\mathbf{\theta}^T\mathbf{x}\_i)$
-其中sigmoid如下，斜s型的一个函数，z=0时刚好是0.5。
-$sigmoid(z) = \frac{1}{1+e^{-z}}$
+$h\_\theta(\mathbf{x}\_i) = sigmoid(\mathbf{\theta}^T\mathbf{x}\_i)$，其中$sigmoid(z) = \frac{1}{1+e^{-z}}$，斜s型的一个函数。
 其中相应地cost function也要作出改变，才能是单峰的凸函数：
 $J(\theta) = -\frac{1}{m}[\mathbf{y}^Tlogh\_\theta(\mathbf{X})+(1-\mathbf{y})^Tlog(1-h\_\theta(\mathbf{X}))] + \frac{\lambda}{2m}(\mathbf{\theta}\_{-0})^.2$
 对于分多类的情况，每次训练一类，得到一个$h\_{\theta\_i}(\mathbf{X})$，然后求$argmax\\{i,h\_{\theta\_i}(\mathbf{X})\\}$就好了。
@@ -45,7 +37,7 @@ $J(\theta) = -\frac{1}{m}[\mathbf{y}^Tlogh\_\theta(\mathbf{X})+(1-\mathbf{y})^Tl
 
 ##处理方法
 各个特征值域不同，要做Feature Scaling与Mean Normalization:
-$\mathbf{x'} = \frac{\mathbf{x}-\nu}{\mathbf{x_{max}}-\mathbf{x_{min}}}$
+$\mathbf{x'} = \frac{\mathbf{x}-\nu}{\mathbf{x\_{max}}-\mathbf{x\_{min}}}$
 Overfitting: 去除冗余特征，再调整参数
 
 ----------------
