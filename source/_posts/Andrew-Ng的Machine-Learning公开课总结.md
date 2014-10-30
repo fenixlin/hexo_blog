@@ -4,10 +4,8 @@ tags:
 date: 2014-10-18 20:55:18
 catagories:
 ---
-
-Tom Mitchell(1998)指出机器学习最重要的三个概念：Task（概括性的目标……），Performance(衡量指标)，Experience(训练过程)
+机器学习，主要是通过一个训练过程去优化某个衡量指标(这里称***cost function***)，最终实现与之相关的目标。
 这门课上提到的算法都是静态的。只着眼于一次采样。要通过一次训练尽可能好地拟合真实函数。
-训练的过程，一般是通过最优化***cost function***来实现。
 为简洁起见以下不说明任何符号含义，最后才附上说明。
 
 ##有监督学习
@@ -39,7 +37,7 @@ cost function作出的改变，是为了保证它是单峰的凸函数。
 对于分多类的情况，每次训练一类，得到一个$h\_{\theta\_i}(\mathbf{X})$，然后求$argmax\\{i,h\_{\theta\_i}(\mathbf{X})\\}$就好了。
 
 **神经网络**
-![](http://i38.photobucket.com/albums/e127/gacjy/2014-10-26_20-46-57.jpg)
+![](http://img0.ph.126.net/cLoJ0z1fdt0ykovTENAk_g==/3110298492670185813.jpg)
 神经网络一般三种层：input，output，hidden(中间层)，联合而成一个非线性假设。hidden / output每个节点都有：
 $a^{(i)}\_j=g(\boldsymbol{\theta}^{(i-1)}\_ja^{(i-1)})$，课程用$g(x)=sigmoid(x)$为例，称为sigmoid ***activation function***
 用到的cost function：
@@ -57,10 +55,32 @@ $\frac{d}{d\theta}J(\theta)\approx\frac{J(\theta+\epsilon)-J(\theta-\epsilon)}{2
 线性回归中，如果$\alpha$太大，会overfitting，现象就是cost越来越大程序无法停止。太小又会跑得慢。
 因此使用***Grid Search***，0.01, 0.03, 0.1, 0.3这样下去，直到回归速度足够快而又不过头。
 
-##处理方法
+##整体策略
+先用简单的算法，基础的数据集进行学习，进行初步的分析，并检查错误点的问题，看更多的数据、更多的特征、更复杂的模型和其他的预处理或是否有用，改进什么方向会更有效。
+
+**输入前的处理**
 各个特征值域不同，要做Feature Scaling与Mean Normalization:
 $\mathbf{x'} = \frac{\mathbf{x}-\nu}{\mathbf{x\_{max}}-\mathbf{x\_{min}}}$
-Overfitting: 去除冗余特征，再调整参数
+
+**对算法作评估**
+从训练集中：
+取出一部分作为test set。以客观评估算法，预测在真实大规模数据中的准确度/置信度。
+取出一部分作为cross validation set，如果除了训练以外还有东西要选择的话。如不同的超参、特征个数、模型等等。
+
+对于训练集中函数值偏向比较严重的情况(如分类中大多偏向于某一类)：
+定义$Precison = \frac{准确的预测个数}{在这个范围内的预测个数}$，$Recall=\frac{准确的预测个数}{在这个范围内的样本个数}$（用打靶和标本回收就好理解了）
+那么可以用$F\_1 = 2\frac{PR}{P+R}$进行评估
+
+**后续调整**
+如果误差很大，排除模型的问题，除了调整超参（可训练参数之上的参数如$\lambda$），还可以尝试以下方法：
+Overfitting(高variance): 去除冗余特征，获取更多训练集
+Underfitting(高bias): 增加特征
+
+最好通过Learning curve来进行诊断（否则只能降维画图了）：
+![](http://img1.ph.126.net/O5uMw5JbiEK-e9I4FRbBZQ==/6619335976630562554.jpg)
+训练集的error会组件增加，cv集的error会逐渐减少，当两个函数比较平缓时，之间的间距太大就是高variance（同时说明还有训练空间），太小就是高bias。
+
+
 
 ----------------
 **符号说明**
