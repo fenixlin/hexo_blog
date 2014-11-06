@@ -29,6 +29,7 @@ $ git config --global user.email "lazylazyowl@gmail.com"
 $ git clone https://github.com/lazyowl/hexo_blog
 $ git init
 $ git status
+$ git pull
 $ git add -A
 $ git commit -a
 $ git remote add origin https://github.com/lazyowl/hexo_blog

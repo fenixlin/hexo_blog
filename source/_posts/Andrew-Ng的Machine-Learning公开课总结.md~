@@ -4,6 +4,7 @@ tags:
 date: 2014-10-18 20:55:18
 catagories:
 ---
+(花了两个月闲暇时间学习的课程，就在这里总结给你看\>v<\!)
 机器学习，主要是通过一个训练过程去优化某个衡量指标(这里称***cost function***)，最终实现与之相关的目标。
 这门课上提到的算法都是静态的。只着眼于一次采样。要通过一次训练尽可能好地拟合真实函数。
 为简洁起见以下不说明任何符号含义，最后才附上说明。
@@ -18,7 +19,7 @@ $h\_\theta(\mathbf{x}\_i) = \boldsymbol{\theta}^T\mathbf{x}\_i$ ， $\mathbf{h\_
 $J(\boldsymbol{\theta}) = \frac{1}{2m}(h\_\theta(\mathbf{X})-\mathbf{y})^.2 + \lambda(\boldsymbol{\theta}\_{-0})^.2$
 最优化cost方法1 —— 多次***gradient descent***求解:
 $\boldsymbol{\theta'} = \boldsymbol{\theta}-\alpha\frac{\partial}{\partial\boldsymbol{\theta}}J(\boldsymbol{\theta}) = \boldsymbol{\theta}-\alpha\frac{1}{m}(\mathbf{X}(h\_\theta(\mathbf{X})-\mathbf{y})+\lambda\boldsymbol{\theta}\_{-0})$
-最优化cost方法2 —— 数学方法***normal equation***:
+最优化cost方法2 —— 数学直接求解***normal equation***:
 $\boldsymbol{\theta} = (\mathbf{X}^T\mathbf{X}+\lambda\mathbf{1}\_{-0})^{-1}\mathbf{X}^T\mathbf{y}$
 
 线性回归是估值用的。$\lambda(\boldsymbol{\theta}\_{-0})^.2$项是为了避免Overfitting。
@@ -36,8 +37,17 @@ $J(\boldsymbol{\theta}) = -\frac{1}{m}[\mathbf{y}^Tlog(\mathbf{h}\_\theta(\mathb
 cost function作出的改变，是为了保证它是单峰的凸函数。
 对于分多类的情况，每次训练一类，得到一个$h\_{\theta\_i}(\mathbf{X})$，然后求$argmax\\{i,h\_{\theta\_i}(\mathbf{X})\\}$就好了。
 
+**Support Vector Machine**
+感觉课上SVM还是说得不是很清楚。
+$h\_\theta(\mathbf{x}\_i) = \boldsymbol{\theta}^T\mathbf{x}\ge0\ ?\ 1：0$。
+用到的cost function：
+$J(\boldsymbol{\theta}) = -C[\mathbf{y}^Tcost_0(\boldsymbol{\theta}^Tf(\mathbf{x}))+(\mathbf{1-y})^Tcost_1(\boldsymbol{\theta}^Tf(\mathbf{x}))] + \frac{\lambda}{2}\(\boldsymbol{\theta}\_{-0})^.2$
+相比于逻辑回归，可以保证分类的分界线是
+这里还可以用到核函数(也称similarity function)。上面$f(\mathbf{x})=\mathbf{x}$的是线性核。也可以用高斯核(也叫squared exponential kernel)。
+这一块迟点再回来补全吧。
+
 **神经网络**
-![](http://img0.ph.126.net/cLoJ0z1fdt0ykovTENAk_g==/3110298492670185813.jpg)
+![](http://i38.photobucket.com/albums/e127/gacjy/2014-10-26_20-46-57.jpg)
 神经网络一般三种层：input，output，hidden(中间层)，联合而成一个非线性假设。hidden / output每个节点都有：
 $a^{(i)}\_j=g(\boldsymbol{\theta}^{(i-1)}\_ja^{(i-1)})$，课程用$g(x)=sigmoid(x)$为例，称为sigmoid ***activation function***
 用到的cost function：
@@ -55,12 +65,43 @@ $\frac{d}{d\theta}J(\theta)\approx\frac{J(\theta+\epsilon)-J(\theta-\epsilon)}{2
 线性回归中，如果$\alpha$太大，会overfitting，现象就是cost越来越大程序无法停止。太小又会跑得慢。
 因此使用***Grid Search***，0.01, 0.03, 0.1, 0.3这样下去，直到回归速度足够快而又不过头。
 
+##无监督学习
+无监督学习的数据都是没有标号的，也就是没有拿来监督的$\mathbf{y}$。其学习目的是找出数据的潜在结构，比如做分类。
+
+**K-Means**
+算法伪代码如下:
+```python
+分类点向量mu随机化(分别选K个输入点作为分类点)
+while (1):
+    for i in range(N):
+        x[i]的类别c[i] := 离x[i]最近的mu[i]的类别
+    for i in range(N):
+        mu[i] := 目前所有和mu[i]同类别的x[i]的均值
+    if (mu前后差异小于置信值) break
+```
+要优化的cost function就是离各自中心距离的总和:
+$J(c,\mu)=\frac{1}{m}\sum\_{i=1}^{m}|x-\mu\_{c^{(i)}}|^2$
+
+为了保证算法不陷入局部最优值，最好是跑多几次选最优，保证不会被随机害死。
+而要选择分类的数量K，一种方法是尝试过多个K后画出如下的图。图示“肘”位是最好的点。如果没有“肘”这种方法就无效了。
+![](http://i38.photobucket.com/albums/e127/gacjy/QQ622A56FE20141103220649.png)
+
 ##整体策略
-先用简单的算法，基础的数据集进行学习，进行初步的分析，并检查错误点的问题，看更多的数据、更多的特征、更复杂的模型和其他的预处理或是否有用，改进什么方向会更有效。
+先用简单的算法，基础的数据集进行学习和分析，并检查错误点，看更多的数据、更多的特征、更复杂的模型和其他的预处理或是否有用，改进什么方向会更有效。
+
+一般来说，对于人类专家本身能处理的问题，只要数据集够大，并使用相对复杂的模型，都会有不错的效果。
 
 **输入前的处理**
 各个特征值域不同，要做Feature Scaling与Mean Normalization:
 $\mathbf{x'} = \frac{\mathbf{x}-\nu}{\mathbf{x\_{max}}-\mathbf{x\_{min}}}$
+
+为了减少运算量，压缩数据，画图分析，可以使用PCA方法降维。
+> 协方差矩阵$\Sigma = \frac{1}{m}\mathbf{X^TX}$
+> 用svd分解计算特征值 $[U, S, V] = svd(\Sigma)$ (因为$\Sigma$肯定是半正定矩阵)
+> 新的输入集$Z = \sigma\_k(U)^TX$，其中$\sigma\_k(U)$是取$U$的前$k$列
+
+将m维降至k维，核心思想是找到一个k维的平面，使输入集X所有点离平面距离总和(projection error)最小。
+（待续）
 
 **对算法作评估**
 从训练集中：
@@ -68,8 +109,8 @@ $\mathbf{x'} = \frac{\mathbf{x}-\nu}{\mathbf{x\_{max}}-\mathbf{x\_{min}}}$
 取出一部分作为cross validation set，如果除了训练以外还有东西要选择的话。如不同的超参、特征个数、模型等等。
 
 对于训练集中函数值偏向比较严重的情况(如分类中大多偏向于某一类)：
-定义$Precison = \frac{准确的预测个数}{在这个范围内的预测个数}$，$Recall=\frac{准确的预测个数}{在这个范围内的样本个数}$（用打靶和标本回收就好理解了）
-那么可以用$F\_1 = 2\frac{PR}{P+R}$进行评估
+定义$Precison = \frac{准确的预测个数}{在这个范围内的预测个数}$，$Recall=\frac{准确的预测个数}{在这个范围内的样本个数}$（用打靶和标本回收就好理解了），这两个没法做到同时很高
+所以可以用$F\_1 = 2\frac{PR}{P+R}$进行评估
 
 **后续调整**
 如果误差很大，排除模型的问题，除了调整超参（可训练参数之上的参数如$\lambda$），还可以尝试以下方法：
@@ -77,10 +118,10 @@ Overfitting(高variance): 去除冗余特征，获取更多训练集
 Underfitting(高bias): 增加特征
 
 最好通过Learning curve来进行诊断（否则只能降维画图了）：
-![](http://img1.ph.126.net/O5uMw5JbiEK-e9I4FRbBZQ==/6619335976630562554.jpg)
+![](http://i38.photobucket.com/albums/e127/gacjy/2014-10-30_21-05-22-1.jpg)
 训练集的error会组件增加，cv集的error会逐渐减少，当两个函数比较平缓时，之间的间距太大就是高variance（同时说明还有训练空间），太小就是高bias。
 
-
+（待续）
 
 ----------------
 **符号说明**

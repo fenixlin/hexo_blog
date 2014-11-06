@@ -22,7 +22,7 @@ $\boldsymbol{\theta'} = \boldsymbol{\theta}-\alpha\frac{\partial}{\partial\bolds
 最优化cost方法2 —— 数学直接求解***normal equation***:
 $\boldsymbol{\theta} = (\mathbf{X}^T\mathbf{X}+\lambda\mathbf{1}\_{-0})^{-1}\mathbf{X}^T\mathbf{y}$
 
-线性回归是估值用的。$\lambda(\boldsymbol{\theta}\_{-0})^.2$项是为了避免Overfitting。
+线性回归是估值用的。$\lambda(\boldsymbol{\theta}\_{-0})^.2$项是为了避免Overfitting的***regularization项***。
 规模比较大的数据，用gradient descent。规模比较小的数据，或者需要验证，用normal euqation，因为它计算逆矩阵要$O(n^3)$，计算量大。
 注意normal equation还要保证特征之间独立才会有逆矩阵，否则只能用伪逆代替
 
@@ -36,6 +36,11 @@ $J(\boldsymbol{\theta}) = -\frac{1}{m}[\mathbf{y}^Tlog(\mathbf{h}\_\theta(\mathb
 逻辑回归是分类用的（或者说结果集比较有限的估值）。
 cost function作出的改变，是为了保证它是单峰的凸函数。
 对于分多类的情况，每次训练一类，得到一个$h\_{\theta\_i}(\mathbf{X})$，然后求$argmax\\{i,h\_{\theta\_i}(\mathbf{X})\\}$就好了。
+
+**高斯回归**
+多维高斯回归由均值矢量和协方差矩阵决定：
+$p(\mathbf{x};\boldsymbol{\mu,\Sigma}) = \frac{1}{(2\pi)^{\frac{n}{2}}|\boldsymbol{\Sigma}|^{\frac{1}{2}}}exp(-\frac{1}{2}(x-\boldsymbol{\mu})^T\boldsymbol{\Sigma}^{-1}(x-\boldsymbol{\mu}))$
+公开课里面是用Anomaly Detection这个大例子带出的，$p(\mathbf{x};\boldsymbol{\mu,\Sigma})<\epsilon$为异常。应用于异常例子相当少的情况。应对方法是训练集全是“正常”。cv集有少部分“异常”，以训练合适的置信度参数$\epsilon$。
 
 **Support Vector Machine**
 感觉课上SVM还是说得不是很清楚。
@@ -60,6 +65,15 @@ $\frac{d}{d\theta}J(\theta)\approx\frac{J(\theta+\epsilon)-J(\theta-\epsilon)}{2
 神经网络一般只有三层，hidden如有多层，各层的点数一般相同。
 注意cost function和逻辑回归不同之处在，前一项要考虑多个output，后一项要考虑每一层的矩阵。
 
+**协同过滤**
+从recommender system引申出来的一类算法。推荐系统里面有user，有item，要预估user对item的评分，从而进行统计、分类和推荐。
+对每个user建模，就有参数$\theta$需要训练。对每个item建模，建有参数$x$需要训练。
+协同过滤的思想，就在于$\theta$和$x$可以轮流改进，或一起学习。
+以线性回归代价函数为例，考虑两个代价函数合并
+$J(\boldsymbol{\theta}) = \frac{1}{2m}(h\_\theta(\mathbf{X})-\mathbf{y})^.2 + \lambda(\boldsymbol{\theta}\_{-0})^.2$，$J(\boldsymbol{x}) = \frac{1}{2n}(h\_x(\mathbf{\Theta})-\mathbf{y})^.2 + \lambda(\boldsymbol{x}\_{-0})^.2$
+有
+$J(\boldsymbol{\Theta,X}) = \frac{1}{2}(\mathbf{X\Theta^T}-\mathbf{Y})^.2+ \frac{\lambda}{2}(\boldsymbol{X}\_{-0})^.2 + \frac{\lambda}{2}(\boldsymbol{\Theta}\_{-0})^.2$
+所以参数随机初始化一下之后就可以像线性回归一样训练了。注意为了防止某行某列完全没有评分数据，必须整个矩阵进行mean normalization。
 
 **参数调整**
 线性回归中，如果$\alpha$太大，会overfitting，现象就是cost越来越大程序无法停止。太小又会跑得慢。
@@ -101,7 +115,10 @@ $\mathbf{x'} = \frac{\mathbf{x}-\nu}{\mathbf{x\_{max}}-\mathbf{x\_{min}}}$
 > 新的输入集$Z = \sigma\_k(U)^TX$，其中$\sigma\_k(U)$是取$U$的前$k$列
 
 将m维降至k维，核心思想是找到一个k维的平面，使输入集X所有点离平面距离总和(projection error)最小。
-（待续）
+k应该选择满足$\frac{\frac{1}{m}\sum_{i=1}^m|x^{(i)}-x_{approx}^{(i)}|^2}{\frac{1}{m}\sum_{i=1}^{m}|x^{(i)}|^2}=1-\frac{\sum_{i=1}^kS_{ii}}{\sum_{i=1}^nS_{ii}}\le(1-置信度)$，保证方差基本不变。$S_{ii}$是svd分解中S对角线上的元素啦。$x_{approx}=\sigma\_k(U)Z$则是从PCA里面恢复的原值。
+但是注意不要将PCA方法应用于缓解over-fitting的场合，因为regularization已经做得更好。而且最好是不用PCA不行(比如时间、内存不够)才应用PCA，否则用PCA挺浪费时间精力的。
+
+注意Feature Scaling，Mean Normalization的参数，以及PCA的svd分解应该都只从训练集中获取。然后再把相同的映射运用到训练集，cv集和测试集中。
 
 **对算法作评估**
 从训练集中：
