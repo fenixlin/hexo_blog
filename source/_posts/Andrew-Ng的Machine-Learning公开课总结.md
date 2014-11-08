@@ -120,6 +120,13 @@ k应该选择满足$\frac{\frac{1}{m}\sum_{i=1}^m|x^{(i)}-x_{approx}^{(i)}|^2}{\
 
 注意Feature Scaling，Mean Normalization的参数，以及PCA的svd分解应该都只从训练集中获取。然后再把相同的映射运用到训练集，cv集和测试集中。
 
+**大规模数据的计算**
+主要思路是
+> 1.将算法改进为每次只需要一组或几组输入来训练
+> 2.利用map-reduce等大规模数据运算框架（其本质是牺牲排序和读写文件的时间，来切分数据并统筹整个计算机集群进行运算）来训练。
+
+以gradient descent为例，batch gradient, mini-batch gradient, stochastic gradient(待续)
+
 **对算法作评估**
 从训练集中：
 取出一部分作为test set。以客观评估算法，预测在真实大规模数据中的准确度/置信度。
@@ -134,10 +141,13 @@ k应该选择满足$\frac{\frac{1}{m}\sum_{i=1}^m|x^{(i)}-x_{approx}^{(i)}|^2}{\
 Overfitting(高variance): 去除冗余特征，获取更多训练集
 Underfitting(高bias): 增加特征
 
-最好通过Learning curve来进行诊断（否则只能降维画图了）：
+训练模型的好坏，可以通过Learning curve来进行诊断（否则只能降维画图了）：
 ![](http://i38.photobucket.com/albums/e127/gacjy/2014-10-30_21-05-22-1.jpg)
-训练集的error会组件增加，cv集的error会逐渐减少，当两个函数比较平缓时，之间的间距太大就是高variance（同时说明还有训练空间），太小就是高bias。
+训练集的error会逐渐增加，cv集的error会逐渐减少，当两个函数比较平缓时，之间的间距太大就是高variance（同时说明还有训练空间），太小就是高bias。应该考虑采集数据的能力，来将间距提高到合适的位置。
+可以考虑在已有真实数据的基础下，是否加上一定噪音能产生新的数据。特别是图像方面的问题。现在Amazon Mechanical Turk等地方也可以发布实验让人做采集数据。
 
+通常来说，一个问题会在数据采集到模型训练的过程中有多个子阶段，可能还不止一个阶段用到了机器学习。可以运用ceiling analysis来分析改进空间。
+具体做法就是从最开始顺序地、逐阶段地用真实数据代替该阶段的输出，每次统计整个系统的准确率。那么每阶段的作用就是(准确率)
 （待续）
 
 ----------------
