@@ -21,6 +21,7 @@ $J(\boldsymbol{\theta}) = \frac{1}{2m}(h\_\theta(\mathbf{X})-\mathbf{y})^.2 + \l
 $\boldsymbol{\theta'} = \boldsymbol{\theta}-\alpha\frac{\partial}{\partial\boldsymbol{\theta}}J(\boldsymbol{\theta}) = \boldsymbol{\theta}-\alpha\frac{1}{m}(\mathbf{X}(h\_\theta(\mathbf{X})-\mathbf{y})+\lambda\boldsymbol{\theta}\_{-0})$
 最优化cost方法2 —— 数学直接求解***normal equation***:
 $\boldsymbol{\theta} = (\mathbf{X}^T\mathbf{X}+\lambda\mathbf{1}\_{-0})^{-1}\mathbf{X}^T\mathbf{y}$
+另外octave/matlab中还有类似fminunc等最优化函数可以直接求解。
 
 线性回归是估值用的。$\lambda(\boldsymbol{\theta}\_{-0})^.2$项是为了避免Overfitting的***regularization项***。
 规模比较大的数据，用gradient descent。规模比较小的数据，或者需要验证，用normal euqation，因为它计算逆矩阵要$O(n^3)$，计算量大。
@@ -46,7 +47,7 @@ $p(\mathbf{x};\boldsymbol{\mu,\Sigma}) = \frac{1}{(2\pi)^{\frac{n}{2}}|\boldsymb
 感觉课上SVM还是说得不是很清楚。
 $h\_\theta(\mathbf{x}\_i) = \boldsymbol{\theta}^T\mathbf{x}\ge0\ ?\ 1：0$。
 用到的cost function：
-$J(\boldsymbol{\theta}) = -C[\mathbf{y}^Tcost_0(\boldsymbol{\theta}^Tf(\mathbf{x}))+(\mathbf{1-y})^Tcost_1(\boldsymbol{\theta}^Tf(\mathbf{x}))] + \frac{\lambda}{2}\(\boldsymbol{\theta}\_{-0})^.2$
+$J(\boldsymbol{\theta}) = -C\[\mathbf{y}^Tcost_0(\boldsymbol{\theta}^Tf(\mathbf{x}))+(\mathbf{1-y})^Tcost_1(\boldsymbol{\theta}^Tf(\mathbf{x}))\] + \frac{\lambda}{2}\(\boldsymbol{\theta}\_{-0})^.2$
 相比于逻辑回归，可以保证分类的分界线是
 这里还可以用到核函数(也称similarity function)。上面$f(\mathbf{x})=\mathbf{x}$的是线性核。也可以用高斯核(也叫squared exponential kernel)。
 这一块迟点再回来补全吧。
@@ -107,7 +108,7 @@ $J(c,\mu)=\frac{1}{m}\sum\_{i=1}^{m}|x-\mu\_{c^{(i)}}|^2$
 
 **输入前的处理**
 各个特征值域不同，要做Feature Scaling与Mean Normalization:
-$\mathbf{x'} = \frac{\mathbf{x}-\nu}{\mathbf{x\_{max}}-\mathbf{x\_{min}}}$
+$\mathbf{x'} = \frac{\mathbf{x}-\nu}{\mathbf{x\_{max}}-\mathbf{x\_{min}}} \approx \frac{\mathbf{x}-\nu}{s}$
 
 为了减少运算量，压缩数据，画图分析，可以使用PCA方法降维。
 > 协方差矩阵$\Sigma = \frac{1}{m}\mathbf{X^TX}$
@@ -156,4 +157,3 @@ Underfitting(高bias): 增加特征
 $X$输入矩阵，每行是一个输入矢量，size=(N\*M)，$y$采样值，size=(M\*1)，$\nu$均值
 
 ----------------
-

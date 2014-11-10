@@ -46,7 +46,7 @@ $p(\mathbf{x};\boldsymbol{\mu,\Sigma}) = \frac{1}{(2\pi)^{\frac{n}{2}}|\boldsymb
 感觉课上SVM还是说得不是很清楚。
 $h\_\theta(\mathbf{x}\_i) = \boldsymbol{\theta}^T\mathbf{x}\ge0\ ?\ 1：0$。
 用到的cost function：
-$J(\boldsymbol{\theta}) = -C[\mathbf{y}^Tcost_0(\boldsymbol{\theta}^Tf(\mathbf{x}))+(\mathbf{1-y})^Tcost_1(\boldsymbol{\theta}^Tf(\mathbf{x}))] + \frac{\lambda}{2}\(\boldsymbol{\theta}\_{-0})^.2$
+$J(\boldsymbol{\theta}) = -C\[\mathbf{y}^Tcost_0(\boldsymbol{\theta}^Tf(\mathbf{x}))+(\mathbf{1-y})^Tcost_1(\boldsymbol{\theta}^Tf(\mathbf{x}))\] + \frac{\lambda}{2}\(\boldsymbol{\theta}\_{-0})^.2$
 相比于逻辑回归，可以保证分类的分界线是
 这里还可以用到核函数(也称similarity function)。上面$f(\mathbf{x})=\mathbf{x}$的是线性核。也可以用高斯核(也叫squared exponential kernel)。
 这一块迟点再回来补全吧。
