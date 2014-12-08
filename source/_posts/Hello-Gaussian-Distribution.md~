@@ -11,6 +11,6 @@ catagories:
 $$
 f\left(x\right) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{\left(x-\mu\right)^2}{2\sigma^2}}
 $$
-##需要注意的地方
+**需要注意的地方**
 Mathjax和Markdown还是比较容易有冲突的：
 下划线前加上'\'

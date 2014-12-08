@@ -1,4 +1,4 @@
-title: Game_Theory
+title: Coursera Game Theory公开课总结
 tags:
   - Mathematics
 date: 2014-12-08 20:38:43
@@ -7,21 +7,24 @@ catagories:
 最近没事又跑到C站补了博弈论的公开课。其实讲得很少也很浅。不过这类内功修炼下还是有点感觉的，时不时会在论文中突然就出现个纳什均衡帕累托最优什么的呢。
 
 ##Concepts
-Strategy:某个Player可以做的选择
-Action:所有Player作出的Strategy的某个交集
-Best Response: 这名玩家在当前情况下得益最高的选择(可能有等值的好几个)
-Nash Equilibrium: 没有玩家愿意偏离的策略集(注意是情况已经出现，对方策略必定已知。当前情况下全是Best Response，没有明显更好的选择了)
-Strictly Dominant Strategy: 这个选择比其他选择在每一种情况下值都更优。被Dominate的策略是可以直接扔掉不要的(Weakly Dominant是同等或更优，扔掉可能会连带扔走其中一个纳什均衡哦，虽然肯定不是最后一个)
-Pareto Optimality: 没有其他策略Pareto Dominate(某些得益更高，其他得益也至少相等)的策略
+**Strategy**: 某个Player可以做的选择
+**Action**: 所有Player作出的Strategy的某个交集
+**Best Response**: 这名玩家在当前情况下得益最高的选择(可能有等值的好几个)
+**Nash Equilibrium**: 没有玩家愿意偏离的策略集(注意是情况已经出现，对方策略必定已知。当前情况下全是Best Response，没有明显更好的选择了)
+**Strictly Dominant Strategy**: 这个选择比其他选择在每一种情况下值都更优。被dominate的策略是可以直接扔掉不要的
+**Weakly Dominant Strategy**: 相比上面可以是某个更优其他同等。扔掉被它dominate的可能会连带扔走其中一个纳什均衡哦，虽然肯定不是最后一个)
+**Pareto Optimality**: 没有其他策略Pareto Dominate(某些得益更高，其他得益也至少相等)的策略
 
 ##Normal-Form Games
 最简单的用表格表示的博弈
 **Pure Strategy**
 不带概率，选定某个策略
 **Mixed Strategy**
-Mixed Strategy就是在自己手上的几个Pure Strategy中叠加上概率分布。通过计算期望判断优劣。
-这种情况下，一种纳什均衡，就要使得别人在自己的概率下没法区别他的策略。比如横向的策略乘以竖向的概率(该格子出现概率)，各行之间相等。
-Mixed Strategy均衡并不包含Pure Strategy，因为Pure Strategy均衡的策略至少对于某个人来说明显更好，而不仅仅是相等。
+Play的Pure Strategy中叠加上概率分布。
+通过计算期望判断优劣。
+产生了新的一种纳什均衡：别人在自己的概率下没法区别他的策略。比如横向的策略乘以竖向的概率(该格子出现概率)，各行之间相等。
+（注意Pure Strategy均衡的策略一般至少对于某个人来说明显更好，不是相等，和这种均衡无关）
+
 Mixed Strategy中也有Strictly Dominant Strategy，比如两种策略中无论怎样的概率分布都比第三种策略的收益好。
 
 ##Extensive-Form Games
@@ -30,20 +33,22 @@ Mixed Strategy中也有Strictly Dominant Strategy，比如两种策略中无论�
 知道完整的历史信息。每个点是一个独立的选择。所有点的选择的集合就是策略，纯策略数量就是($2^{选择点数量}$)。
 一颗子树是一个Subgame。Subgame均衡的纳什均衡才可信(与Subgame不均衡的相比往往是在其他走不到的子树上有区别)。据此可以从叶节点倒推出均衡状况。
 **Imerfect information Extensive-Form Games**
-相比来说有了等价结点的概念，Player只能知道目前在某一类等价节点，无法区分具体位置
+相比来说有了等价结点的概念，Player只能知道目前在某一类等价节点，无法区分具体位置。
 
 ##Repeated Games
 近乎无限多次的博弈。
 这个时候求收益方法 1.求均值的极限 2.求带(0,1)内指数加权和的极限
 后者可以看作是早期的博弈比后期的博弈重要，也可以看作是博弈每轮都有个概率p在这轮结束。
-虽然彻底的均衡也是一次游戏的纳什均衡，不过如果是通过加权和算的收益而且权p大于某个阈值，可以通过协商，制定惩罚方法，先合作用对双方来说都有更高收益的非均衡策略（权p太小，会导致单次偏离的收益比后面所有加起来的均衡收益极限都高）。
+
+这种博弈产生了新均衡。通过加权和算收益而且权p大于某个阈值的情况下，可以通过协商，制定惩罚方法，先合作用对双方来说都有更高收益的非均衡策略（权p太小，会导致单次偏离的收益比后面所有加起来的均衡收益极限都高）。
 惩罚1 grim trigger strategies：一旦对方偏离一次，自己就永远偏离，回到纳什均衡。
 惩罚2 tit for tat：对方偏离一次，下回合自己偏离一次，然后继续合作
 **Folk's Theorm**
-不小于至少可以取得的(往往单次均衡中的)收益的收益值都enforceable。对各个Action施以概率分布，加起来可以取得的收益都是feasible。既是enforceable又是feasible就是某个纳什均衡中的值啦。
+判断均衡值用。定义不小于至少可以取得的(往往单次均衡中的)收益的收益值都enforceable。对各个Action施以概率分布，加起来可以取得的收益都是feasible。既是enforceable又是feasible就是某个纳什均衡中的值啦。
 
 ##Bayesian Games
-同一个Action，Player有不同的收益，这里有一个变化概率的情况。可以看作每个Player在他的Game集中分布，或Player在他的类型集中分布。
+同一个Action，有一个概率使Player有不同的收益。
+可以看作每个Player在他的Game集中分布，或Player在他的类型集中分布。
 如果只是一次游戏，本质和Mixed Strategy差不多，都是计算期望
 
 ##Coalition Games
