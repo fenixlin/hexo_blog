@@ -1,4 +1,4 @@
-title: "Hexo专用的Mathjax插件安装"
+title: "Install Mathjax for Hexo Blog"
 tags:
   - hexo
 date: 2014-10-16 23:24:02

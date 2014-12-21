@@ -1,3 +1,10 @@
+#Andrew Ng的Machine Learning公开课总结
+tags:
+  - Machine Learning
+date: 2014-10-18 20:55:18
+catagories:
+---
+
 title: Machine Learning Course (from Andrew Ng, Coursera) Summary
 tags:
   - Machine Learning
@@ -11,6 +18,8 @@ catagories:
 
 ##有监督学习
 有监督学习可以做分类和估值。
+
+<!--more-->
 
 **线性回归**
 线性回归已经假设真实函数(目标函数)是线性的。
@@ -44,13 +53,15 @@ $p(\mathbf{x};\boldsymbol{\mu,\Sigma}) = \frac{1}{(2\pi)^{\frac{n}{2}}|\boldsymb
 公开课里面是用Anomaly Detection这个大例子带出的，$p(\mathbf{x};\boldsymbol{\mu,\Sigma})<\epsilon$为异常。应用于异常例子相当少的情况。应对方法是训练集全是“正常”。cv集有少部分“异常”，以训练合适的置信度参数$\epsilon$。
 
 **Support Vector Machine**
-感觉课上SVM还是说得不是很清楚。
-$h\_\theta(\mathbf{x}\_i) = \boldsymbol{\theta}^T\mathbf{x}\ge0\ ?\ 1：0$。
-用到的cost function：
-$J(\boldsymbol{\theta}) = -C\[\mathbf{y}^Tcost_0(\boldsymbol{\theta}^Tf(\mathbf{x}))+(\mathbf{1-y})^Tcost_1(\boldsymbol{\theta}^Tf(\mathbf{x}))\] + \frac{\lambda}{2}\(\boldsymbol{\theta}\_{-0})^.2$
-相比于逻辑回归，可以保证分类的分界线是
-这里还可以用到核函数(也称similarity function)。上面$f(\mathbf{x})=\mathbf{x}$的是线性核。也可以用高斯核(也叫squared exponential kernel)。
-这一块迟点再回来补全吧。
+SVM本身是建立在线性分类器上的。不过相较于逻辑回归用的sigmoid函数，SVM在超过一定界限就会直接为0了。类似：
+$cost\_0(\boldsymbol{\theta}^T\mathbf{x}\_i) = \boldsymbol{\theta}^T\mathbf{x}\le{-1}\ ?\ -(\boldsymbol{\theta}^T\mathbf{x}+1)：0$。
+用到的总cost function：
+$J(\boldsymbol{\theta}) = -C\[\mathbf{y}^Tcost_0(\boldsymbol{\theta}^Tf(\mathbf{x}))+(\mathbf{1-y})^Tcost_1(\boldsymbol{\theta}^Tf(\mathbf{x}))\] + \frac{\lambda}{2}\(\boldsymbol{\theta}\_{-0})^{.2}$
+这样相比于逻辑回归，可以保证分类的分界线与所分两类的距离最大(又称Large Margin Classifier)
+
+为了解决线性不可分问题，引入核函数(也称similarity function)。核函数本质上是将输入之间的关系从低维空间投射到高维空间来看待，表现出的是$\mathbf{X\cdot X}\to\mathcal{ R}$。具体做法是将带有两个向量的式子（相减，相乘等），代入可以傅里叶转换为高维乃至无穷维函数的某个函数（投射函数），那么这个式子就相当于高维函数前面的系数。投射函数不变整个问题还是线性可解的。
+上面$f(\mathbf{r})=\mathbf{r}$的是线性核。也可以用高斯核(也叫squared exponential kernel)：$exp(-\frac{\mathbf{r}^2}{2\sigma^2})$
+相较于逻辑回归，适用于样本较少的情况。特征相比样本数数量越少，需要使用的核一般越复杂。
 
 **神经网络**
 ![](http://i38.photobucket.com/albums/e127/gacjy/2014-10-26_20-46-57.jpg)
@@ -126,7 +137,7 @@ k应该选择满足$\frac{\frac{1}{m}\sum_{i=1}^m|x^{(i)}-x_{approx}^{(i)}|^2}{\
 > 1.将算法改进为每次只需要一组或几组输入来训练
 > 2.利用map-reduce等大规模数据运算框架（其本质是牺牲排序和读写文件的时间，来切分数据并统筹整个计算机集群进行运算）来训练。
 
-以gradient descent为例，batch gradient, mini-batch gradient, stochastic gradient(待续)
+以gradient descent为例，batch gradient, mini-batch gradient, stochastic gradient **(待续)**
 
 **对算法作评估及后续调整**
 从训练集中：
