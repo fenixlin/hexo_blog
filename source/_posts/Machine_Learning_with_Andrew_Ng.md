@@ -1,10 +1,3 @@
-#Andrew Ng的Machine Learning公开课总结
-tags:
-  - Machine Learning
-date: 2014-10-18 20:55:18
-catagories:
----
-
 title: Machine Learning Course (from Andrew Ng, Coursera) Summary
 tags:
   - Machine Learning
