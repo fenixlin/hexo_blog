@@ -8,7 +8,7 @@ subtitle: My Tech Sumup for Computer Science. Welcome!
 description: Machine Learning, Algorithms and Programming Languages.
 author: Lazyowl
 email: lazylazyowl@gmail.com
-language: zh-CN
+language: en-us
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -65,7 +65,7 @@ logger_format: dev
 ## Hexo uses Moment.js to parse and display date
 ## You can customize the date format as defined in
 ## http://momentjs.com/docs/#/displaying/format/
-date_format: MM D YY
+date_format: MMM Do YY
 time_format: H:mm:ss
 
 # Pagination
@@ -88,6 +88,6 @@ exclude_generator:
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
   type: github
-  repository: git@github.com:lazyowl/lazyowl.github.io.git
+  repository: git@github.com:fenixlin/fenixlin.github.io.git
   branch: master
 
