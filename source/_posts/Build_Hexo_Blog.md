@@ -7,9 +7,9 @@ catagories: hexo
 呼呼，一直想搭个博客，但是一直太懒了=.=...还跑到jekyll bootstrap那里去走了一些弯路。直到发现了Hexo。实在太赞！
 
 下面就写一下搭建Hexo博客的主要流程好了。顺便给自己备忘备忘。
-**因为是回忆用，所以博客文章写得会尽可能地精简，直白，不拘小节，向当年[Matrix67超牛的5000字总结](http://www.matrix67.com/blog/archives/90)看齐。各种总结也会是以后主题。**
+**因为是回忆用，所以博客文章写得会尽可能地精简，直白，不拘小节，向当年[Matrix67超牛的5000字总结](http://www.matrix67.com/blog/archives/90)看齐。各种总结也会是以后主题。会中文这种冗余超低的语言，总结起来真的是超幸福的好嘛！**
 哈哈，不过会尽可能地说浅显的啦！
-希望能够一直坚持吧！这个过程不免漫长而痛苦。不过这一年的面试经验说明，不努力一下，遗忘曲线两年就会到底的啦！**甚至可以遇见我研究生之后找工作的最大担心就是本科的知识丢得差不多了吧= =ｂ**
+希望能够一直坚持吧！这个过程不免漫长而痛苦。不过这一年的面试经验说明，不努力一下，遗忘曲线两年就会到底的啦！**甚至可以遇见我研究生之后找工作的最大担心就是本科的知识丢得差不多了吧= =ｂ**当年信息安全实验课漏掉了的笔记和程序真是让我超级超级心痛啊啊啊TAT！
 
 <!--more-->
 
@@ -17,23 +17,23 @@ catagories: hexo
 1. 安装git，弄好SSH登录。
 ``` bash
 $ sudo apt-get install git git-core git-doc git-gui
-$ ssh-keygen -t rsa -C "lazylazyowl@gmail.com"
+$ ssh-keygen -t rsa -C "fenixlin@yandex.com"
 ```
 放置id_rsa.pub到github.com(个人设置页就有)
 ``` bash
 $ ssh -T git@github.com
-$ git config --global user.name "lazyowl"
-$ git config --global user.email "lazylazyowl@gmail.com"
+$ git config --global user.name "fenixlin"
+$ git config --global user.email "fenixlin@yandex.com"
 ```
 2. 常用的github命令(创建目录时要在网页里创建):
 ``` bash
-$ git clone https://github.com/lazyowl/hexo_blog
+$ git clone https://github.com/fenixlin/hexo_blog
 $ git init
 $ git status
 $ git pull
 $ git add -A
 $ git commit -a
-$ git remote add origin https://github.com/lazyowl/hexo_blog
+$ git remote add origin https://github.com/fenixlin/hexo_blog
 $ git push -u origin master
 ```
 
