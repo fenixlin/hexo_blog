@@ -55,7 +55,7 @@ Player组队有组队的收益。
 1. Shapley Value，考虑所有组队顺序情况下单个人的贡献。即全部组队排列下这个人的边缘贡献和/全排列数。
 2. Core Value，合作收益分到每个子集，都不低于子集本身能取得的收益的分配方案(对于要么有收益要么没有的simple game，就是关键的不可或缺的Player分收益(不一定平分)，其他Player收益为0)
 
-=====================================================================
+***
 
 下面是 Game Theory 2 的内容
 ##Basis and Voting(Social Choice)
@@ -120,7 +120,7 @@ Auction有很多种，包括常见的Bidder自己喊价格的English，Auctionee
 **Virtual Valuation**: $\Phi_i(v_i)=v_i-\frac{1-F_i(v_i)}{f_i(v_i)}$，上面是累积分布函数，下面是概率密度函数。如果他是单调增长的， 最好的reserve price就是V.V.=0的时候。（注意即使R.P.是分布下界，对可能出现的只有一个人的拍卖也有效）
 **Myerson Theorem**：Single-good下，direct机制里，Optimal Auction即把东西卖给V.V.最大的人，且V.V.最大的人支付第二高V.V.。
 
-=====================================================================
+***
 
 ##后记
 

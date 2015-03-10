@@ -120,7 +120,7 @@ Auction有很多种，包括常见的Bidder自己喊价格的English，Auctionee
 **Virtual Valuation**: $\Phi_i(v_i)=v_i-\frac{1-F_i(v_i)}{f_i(v_i)}$，上面是累积分布函数，下面是概率密度函数。如果他是单调增长的， 最好的reserve price就是V.V.=0的时候。（注意即使R.P.是分布下界，对可能出现的只有一个人的拍卖也有效）
 **Myerson Theorem**：Single-good下，direct机制里，Optimal Auction即把东西卖给V.V.最大的人，且V.V.最大的人支付第二高V.V.。
 
-=====================================================================
+***
 
 ##后记
 
