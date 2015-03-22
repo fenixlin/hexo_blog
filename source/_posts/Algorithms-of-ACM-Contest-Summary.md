@@ -1,4 +1,4 @@
-title: Algorithms_of_ACM_Contest_Summary
+title: Algorithms of ACM Contest Summary
 tags:
   - Algorithm
   - Summary
@@ -13,7 +13,9 @@ catagories:
 ##动态规划(背包/树状/字符串状态压缩等)
 **KMP**
 
-##图论(最短路/生成树等)
+<!--more-->
+
+##树与图论(最短路/生成树等)
 **Adjacency List**
 
 ![](http://i57.tinypic.com/2czavls.jpg)
@@ -52,7 +54,11 @@ catagories:
 
 任意图的最小生成树算法。边集按权值从小到大排序逐条尝试加入解，并维护一个并查集以保证不形成环路，直到成功加入V-1条边。$O(VlogV+ElogE)$
 
-**Tarjan**
+**Kosaraju**
+
+有向图求强连通分支(任意点相互可达)的算法。先DFS一次记录访问顺序，然后所有边取反，逆访问顺序多次DFS，每次DFS到的点即为一个强连通分支。
+
+*   类似的算法还有Tarjan和Gabow，不过时间复杂度的优化并不算太大，暂时不写啦
 
 ##网络流(二分图匹配等)
 **Ford-Fulkerson**
