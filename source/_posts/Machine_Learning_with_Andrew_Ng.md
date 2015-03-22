@@ -59,7 +59,7 @@ $J(\boldsymbol{\theta}) = -C\[\mathbf{y}^Tcost\_0(\boldsymbol{\theta}^Tf(\mathbf
 相较于逻辑回归，适用于样本较少的情况。特征相比样本数数量越少，需要使用的核一般越复杂。
 
 **神经网络**
-![](http://i38.photobucket.com/albums/e127/gacjy/2014-10-26_20-46-57.jpg)
+![](http://i61.tinypic.com/2h83jh5.jpg)
 神经网络一般三种层：input，output，hidden(中间层)，联合而成一个非线性假设。hidden / output每个节点都有：
 $a^{(i)}\_j=g(\boldsymbol{\theta}^{(i-1)}\_ja^{(i-1)})$，课程用$g(x)=sigmoid(x)$为例，称为sigmoid ***activation function***
 用到的cost function：
@@ -105,7 +105,7 @@ $J(c,\mu)=\frac{1}{n}\sum\_{i=1}^{n}|x-\mu\_{c^{(i)}}|^2$
 
 为了保证算法不陷入局部最优值，最好是跑多几次选最优，保证不会被随机害死。
 而要选择分类的数量K，一种方法是尝试过多个K后画出如下的图。图示“肘”位是最好的点。如果没有“肘”这种方法就无效了。
-![](http://i38.photobucket.com/albums/e127/gacjy/QQ622A56FE20141103220649.png)
+![](http://i61.tinypic.com/20ji9ur.jpg)
 
 ##整体策略
 先用简单的算法，基础的数据集进行学习和分析，并检查错误点，看更多的数据、更多的特征、更复杂的模型和其他的预处理或是否有用，改进什么方向会更有效。
@@ -153,7 +153,7 @@ Overfitting(高variance): 去除冗余特征，获取更多训练集
 Underfitting(高bias): 增加特征
 
 训练模型的好坏，还可以通过Learning curve来进行诊断（否则只能降维画图了）：
-![](http://i38.photobucket.com/albums/e127/gacjy/2014-10-30_21-05-22-1.jpg)
+![](http://i61.tinypic.com/212v1vl.jpg)
 训练集的error会逐渐增加，cv集的error会逐渐减少，当两个函数比较平缓时，之间的间距太大就是高variance（同时说明还有训练空间），太小就是高bias。应该考虑采集数据的能力，来将间距提高到合适的位置。
 可以考虑在已有真实数据的基础下，是否加上一定噪音能产生新的数据。特别是图像方面的问题。现在Amazon Mechanical Turk等地方也可以发布实验让人做采集数据。
 
