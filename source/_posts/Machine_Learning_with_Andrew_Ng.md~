@@ -59,7 +59,7 @@ $J(\boldsymbol{\theta}) = -C\[\mathbf{y}^Tcost\_0(\boldsymbol{\theta}^Tf(\mathbf
 相较于逻辑回归，适用于样本较少的情况。特征相比样本数数量越少，需要使用的核一般越复杂。
 
 **神经网络**
-![](http://i38.photobucket.com/albums/e127/gacjy/2014-10-26_20-46-57.jpg)
+![](http://i61.tinypic.com/2h83jh5.jpg)
 神经网络一般三种层：input，output，hidden(中间层)，联合而成一个非线性假设。hidden / output每个节点都有：
 $a^{(i)}\_j=g(\boldsymbol{\theta}^{(i-1)}\_ja^{(i-1)})$，课程用$g(x)=sigmoid(x)$为例，称为sigmoid ***activation function***
 用到的cost function：

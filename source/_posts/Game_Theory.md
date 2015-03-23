@@ -1,6 +1,7 @@
-title: Game Theory(from Coursera)'s Brief Summary
+title: Game Theory(from Coursera)'s Summary
 tags:
   - Mathematics
+  - Coursera
 date: 2014-12-08 20:38:43
 catagories:
 ---

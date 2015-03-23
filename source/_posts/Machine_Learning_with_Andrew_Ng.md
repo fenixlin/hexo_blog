@@ -1,6 +1,7 @@
-title: Machine Learning Course (from Andrew Ng, Coursera) Summary
+title: Machine Learning (from Coursera) Summary
 tags:
   - Machine Learning
+  - Coursera
 date: 2014-10-18 20:55:18
 catagories:
 ---
