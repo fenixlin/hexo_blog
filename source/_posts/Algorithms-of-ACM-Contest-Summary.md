@@ -5,14 +5,13 @@ tags:
 date: 2015-03-22 20:55:37
 catagories:
 ---
-*(2015/03/23 更新动态规划)*
+*(2015/04/10 更新动态规划，网络流，STL)*
 
-四五年没有再去好好温习ACM方面的东西了，不过这一块其实时不时还是会提到，姑且做个简陋的算法方面的总结吧~
+四五年没有再去好好温习ACM方面的东西了，不过这一块其实时不时还是会提到，姑且做个简陋的算法方面的总结吧~时间精力有限，能总结多少是多少了。
 这里写法同样是"复习用"。[NOCOW](http://www.nocow.cn/index.php/%E9%A6%96%E9%A1%B5)会比我说得更加详细清楚:P
 
 ##动态规划(背包/博弈/树状/字符串/状态压缩等)
 动态规划，核心在于定义"状态"及"状态转移方程"。
-
 <!--more-->
 
 **背包**
@@ -35,15 +34,31 @@ catagories:
 **博弈**
 博弈论的状态一般是很明显的，关键是要从胜负状态反推状态转移方程。
 
-*   取石子……
-*   
+*   SG博弈：最经典的是NIM游戏。【待补充】。参见[这里](http://blog.csdn.net/logic_nut/article/details/4711489)
 
 **树状**
+一般从子节点开始归纳状态转移。这方面的总结太杂乱，【待补充】。
 
-**字符串**
+**序列/字符串**
 
-**KMP**
+*   最大子矩阵 悬线法
+*   KMP
+*   Sunday(http://blog.csdn.net/WINCOL/article/details/4795369)
 
+**插头**
+二维平面，对连通性有要求，逐格进行状态转移的DP，并且每个格子的状态需要进行压缩。
+压缩方法包括：
+1. 连通的格子用同一标号表示。
+2. 路线不能交叉，标号只用两个就够。
+3. 扩大成使用$2^k$进制，位运算来转移
+见[PPT](http://wenku.baidu.com/view/4fe4ac659b6648d7c1c74633.html)
+
+**相关优化**
+
+*   滚动数组：因为动态规划方程中，最外层循环每次往往只需要用到上一次循环的数据，所以只开能够存下两次大循环的空间就好，而不是全部循环的空间。
+*   状态压缩：
+*   单调队列：一般应用于状态转移中，要求旧状态带有"最大/最小"条件的问题。关键是发现可以抛弃掉的、更老的状态，作为单调队列可抛弃的状态。对于有区间限制的题目，可以将{状态值，状态位置}对建成单调双端队列，左限制右求最值。每次状态转移时就可以从单调队列中提取，而不必往前扫描。没有区间限制求第k大/k小的题目，若发现了可抛弃的状态，亦可构建一个单调序列，用二分查找提取(最长不下降子序列)。[见此总结](http://www.cnblogs.com/neverforget/archive/2011/10/13/ll.html)
+*   优先队列/堆优化：
 
 ##树与图论(最短路/生成树等)
 
@@ -94,16 +109,26 @@ catagories:
 ##网络流(二分图匹配等)
 **Ford-Fulkerson**
 **Edmonds-Karp**
-**Dinic**
+**Dinic** 
+优化后的求最大流算法。每次先BFS建立层次图(离源点距离i的点在第i层)，然后DFS逐层递归找一条增广路(能增加流量的路径，流量为路径中权值最小的边)，然后增广值加入总流量，并把整条增广路反向。循环至汇点不能到达。动画及代码见[这里](http://comzyh.com/blog/archives/568/)。
+**SAP**
 **Hungarian**
 
 ##数据结构(包括线段树等)
+
+**Monotonic Queue**
+一个双端队列，左边抛掉不符合新条件的旧元素，右边新元素入队时抛掉不能保持单调性的。
+能够求最大最小/k大k小问题。经常被用于优化动态规划算法。
+**Segmentation tree**
 **Disjoint Set**
+数组记录的树，记录父节点及子树元素个数。
+1. 查找：递归查找出树根a，然后沿路将父节点全部置为a
+2. 合并：要合并的两个节点分别查找出树根a,b，然后元素少的树根a父节点置为b
 **BST**
 **Splay**
-**Segmentation tree**
 **Treap**
 **AVL**
+**Red-Black**
 **SBT**
 **Binary Heap**
 **Leftist Heap**
@@ -113,13 +138,44 @@ catagories:
 
 ##思路/基本功(二分答案/贪心/搜索/排序等)
 
-###排序算法
+**排序算法**
+
 ACM非常少用到，姑且就当算法课基础复习了
-**Insertion**
-**Bubble**
-**Shell**
-**Quick**
-**Heap**
-**Merge**
-**Radix**
-**Bin**
+
+*   Insertion
+*   Bubble
+*   Shell
+*   Quick
+*   Heap
+*   Merge
+*   Radix
+*   Bin
+
+**C++ STL**
+虽然STL和算法无关，但是由于STL的存在，很多数据结构不用自己写，是ACM比赛中必备外挂……
+
+容器：操作包括begin, end, rbegin, rend, erase(,), clear
+**1. 标准序列容器**：
+`list<>` `vector<>` `deque<>`，内存分配分别是连续，小片连续，不连续。
+常用操作（各类略有出入请自行琢磨，下同）: empty, front, back, push\_front(), push\_back(), pop\_front, pop\_back, max\_size, reverse, insert(,,), remove(), remove\_if(), assign(,), swap(), at(), unique, sort
+
+**2. 标准关联容器**：
+`set<>` `multiset<>` `map<,>` `multimap<,>`，对应集合，可重复集合，一对一映射，一对多映射。红黑树实现。
+
+
+**3. 容器适配器**：
+标准序列容器变种，提供受限的底层容器接口，没有迭代器
+`queue<int>` `queue<int,list<int>>`，默认deque作为底层容器，包括操作push,pop,front,back,empty,size
+`priority_queue<int>` `priority_queue<int, vector<int>, greater<int>>`，默认使用vector作为底层容器，包括操作top,push,pop,empty,size
+`stack<>`
+**4. 似容器**：
+`string<>` `valarray<>` `bitset<>`
+**5. 容器迭代器**：
+`vector<int>::iterator` `vector<int>::const_iterator`
+
+算法：
+1. 以下内容需要`#include <algorithm>`
+sort(begin,end,cmp), 相比c的qsort，用的是intro_sort，不会退化
+2. 以下内容需要`#include <functional>`
+greater<> 【待补充】[见这里](http://www.baidu.com/s?ie=utf8&oe=utf8&wd=C%2B%2B%20greater&tn=90128732_hao_pg&ch=2&lans=132),[以及这里](http://wenku.baidu.com/link?url=FQ_M_OG2UgNqJLngZgSQlAeek-0B21j9QoMkvUgrmdq9W1TWoqotNGEvVUuqDn1NdqsBMmntGyyPcsDMj3gVJsLhCRolj2OZxBTnkc0-2Ii)
+less<>
