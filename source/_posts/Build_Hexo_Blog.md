@@ -29,13 +29,17 @@ $ git config --global user.email "fenixlin@yandex.com"
 ``` bash
 $ git clone https://github.com/fenixlin/hexo_blog
 $ git init
-$ git status
+$ git status	#对比commit看现在修改了什么文件
 $ git pull
-$ git add -A
-$ git commit -a
+$ git add -A	#添加所有文件
+$ git commit -a	#如果用--amend就可以补漏，和上一次commit合并
 $ git remote add origin https://github.com/fenixlin/hexo_blog
 $ git push -u origin master
+$ git reset --soft __commitID__		#回滚到__commitID__的commit，之后再git commit -m就好了，新内容也会合并
+$ git mergetool		#一个用来合并diff的可视化工具
 ```
+另外，编辑.gitignore可以忽略匹配其某行的文件，对所有人生效。而.git/info/exclude则只是对本开发者生效
+
 
 # Hexo下载与设置
 
