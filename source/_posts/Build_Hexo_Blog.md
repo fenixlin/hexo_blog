@@ -37,6 +37,9 @@ $ git remote add origin https://github.com/fenixlin/hexo_blog
 $ git push -u origin master
 $ git reset --soft __commitID__		#回滚到__commitID__的commit，之后再git commit -m就好了，新内容也会合并
 $ git mergetool		#一个用来合并diff的可视化工具
+$ git checkout __branch name__　　　　#切换所在分支(还有创建/比对等功能)
+$ git log    #查看git历史。git reflog可以查看包括删除了的commit。
+$ git cherrypick __commitID__   #将其他分支的commit应用到当前分支。
 ```
 另外，编辑.gitignore可以忽略匹配其某行的文件，对所有人生效。而.git/info/exclude则只是对本开发者生效
 
