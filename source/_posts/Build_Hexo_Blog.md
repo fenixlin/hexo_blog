@@ -34,10 +34,14 @@ $ git pull
 $ git add -A	#添加所有文件
 $ git commit -a	#如果用--amend就可以补漏，和上一次commit合并
 $ git remote add origin https://github.com/fenixlin/hexo_blog
+$ git remote    #查看已存储的远程git地址
 $ git push -u origin master
 $ git reset --soft __commitID__		#回滚到__commitID__的commit，之后再git commit -m就好了，新内容也会合并
 $ git mergetool		#一个用来合并diff的可视化工具
 $ git checkout __branch name__　　　　#切换所在分支(还有创建/比对等功能)
+$ git checkout __file name__    #恢复file到上次commit状态
+$ git checkout -f   #恢复所有文件到上次commit状态
+$ git branch    #查看所在分支
 $ git log    #查看git历史。git reflog可以查看包括删除了的commit。
 $ git cherrypick __commitID__   #将其他分支的commit应用到当前分支。
 ```
