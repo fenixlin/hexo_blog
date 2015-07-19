@@ -7,6 +7,8 @@
 
 # use "hexo server" at the root to view it on local web browser
 
+cp ./themes/yilia/_config.yml ./_yilia_config.yml
+
 hexo clean
 hexo generate
 hexo deploy

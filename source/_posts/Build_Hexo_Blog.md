@@ -83,7 +83,7 @@ $ hexo deploy
 $ hexo new post __博客名字__
 ```
 博客模板目前用的是[Yilia](http://litten.github.io/2014/08/31/hexo-theme-yilia/)
-很赞，不赘述。更新是themes/yilla下git pull
+很赞，不赘述。更新是themes/yilia下git pull
 
 
 ##最后瞎掰一下博客的计划
