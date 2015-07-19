@@ -1,6 +1,6 @@
 title: Hello, Hexo Blog!
 tags:
-- hexo
+  - hexo
 date: 2014-10-14 21:09:28
 catagories: hexo
 ---
