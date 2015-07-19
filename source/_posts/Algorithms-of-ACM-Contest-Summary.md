@@ -5,7 +5,7 @@ tags:
 date: 2015-03-22 20:55:37
 catagories:
 ---
-*(2015/07/16 更新网络流，线段树)*
+*(2015/07/19 更新BST)*
 
 四五年没有再去好好温习ACM方面的东西了，不过这一块其实时不时还是会提到，姑且做个简陋的算法方面的总结吧~时间精力有限，能总结多少是多少了。
 这里写法同样是"复习用"。[NOCOW](http://www.nocow.cn/index.php/%E9%A6%96%E9%A1%B5)会比我说得更加详细清楚:P
@@ -61,11 +61,15 @@ catagories:
 ##树与图论(最短路/生成树等)
 
 **Adjacency List**
-
 ![](http://i57.tinypic.com/2czavls.jpg)
 
-**Dijkstra**
+**Topological Sort**
+【待补充】
 
+**Huffman Coding**
+【待补充】
+
+**Dijkstra**
 正权图单源最短路，以贪心为基础。维护一个数组，记录源点到每个点当前已知最短路边权和，初始除了源点全为无穷大。循环V次，每次取数组中的最小值，即为到该对应点的最短路。$O(V^2)$
 
 *   也可以用邻接表保存边，维护一个二叉堆而不是数组。$O((E+V)logV)$
@@ -124,16 +128,28 @@ catagories:
 数组记录的树，记录父节点及子树元素个数。
 1. 查找：递归查找出树根a，然后沿路将父节点全部置为a
 2. 合并：要合并的两个节点分别查找出树根a,b，然后元素少的树根a父节点置为b
-
 **BST**
-**Splay**
-**Treap**
+搜索树是一系列方便快速查找的数据结构。最简单的BST，左儿子小右儿子大，建树、插入、查找都是从树根开始的递归。删除则是该结点与左子树的最大结点互换后删除（因为这个结点不可能有两棵子树。如果换右子树最小也可以）
 **AVL**
+左右子树深度差最多是1。在BST的操作以外，插入完后往上一层算平衡度(左树高减右树高)，如果要进行平衡，看被插入的子子树相对该结点位置。如果路径是LL或RR就单旋，如果是RL或LR就双旋(比如先在儿子左旋，再在该结点右旋)。删除也一样。
+每次插入至多只需要做一次单旋或双旋。删除删成链状的话可能要两次。不过不想写那么细节的话还是都检查并更新了吧。
+所有操作平均及最坏情况都是O(logN)。旋转平均只需O(1)。
+**Splay**
+思路是将要访问的结点比较平衡地旋转(Splay)到树根，这样访问比较频繁的结点都在树根附近。和AVL一样是看结点、父结点和祖父结点的走向关系，LL/RR就单旋/连续单旋(Zig/Zig-Zig)，LR/RL就双旋(Zig-Zag)。插入/查找都是旋转该点到根节点。删除则是把替换前的父节点旋转到根节点(有其他算法变种)。分裂是把作为分裂界的结点旋转到树根后切掉左子树或右子树变成一大一小两棵树。合并的话两棵树必须一大一小，把小树的最大元素旋转到根然后合并。
+虽然单次最坏情况可能有O(n)，均摊复杂度也是O(logN)。长远来看比AVL平均更快，实现逻辑比AVL简单，还支持合并和拆分，不过不能用于并行环境中。
 **Red-Black**
+和AVL树类似。【待补充】
+平衡度要求没有AVL严格。所以插入和删除相比更快，而查找更慢。
+**Treap**
 **SBT**
 **Binary Heap**
+**Skew Heap**
 **Leftist Heap**
 **Fibonacci Heap**
+**Binomial Heap**
+**Trie**
+**B & B-**
+**Hash Table**
 
 ##数学&几何(凸包等)
 
@@ -158,6 +174,11 @@ ACM非常少用到，姑且就当算法课基础复习了
 
 *   KMP
 *   Sunday(http://blog.csdn.net/WINCOL/article/details/4795369)
+
+**搜索算法及技巧**
+
+* 深度限制DFS
+* A*
 
 **C++ STL**
 虽然STL和算法无关，但是由于STL的存在，很多数据结构不用自己写，是ACM比赛中必备外挂……
@@ -187,3 +208,8 @@ sort(begin,end,cmp), 相比c的qsort，用的是intro_sort，不会退化
 2. 以下内容需要`#include <functional>`
 greater<> 【待补充】[见这里](http://www.baidu.com/s?ie=utf8&oe=utf8&wd=C%2B%2B%20greater&tn=90128732_hao_pg&ch=2&lans=132),[以及这里](http://wenku.baidu.com/link?url=FQ_M_OG2UgNqJLngZgSQlAeek-0B21j9QoMkvUgrmdq9W1TWoqotNGEvVUuqDn1NdqsBMmntGyyPcsDMj3gVJsLhCRolj2OZxBTnkc0-2Ii)
 less<>
+
+
+算法可视化参考：
+https://www.cs.usfca.edu/~galles/visualization/Algorithms.html
+
