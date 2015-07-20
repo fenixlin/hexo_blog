@@ -1,18 +1,18 @@
 # Header
 menu:
-  主页: /
-  所有文章: /archives
-  简历: /resume
+  Main Page: /
+  Archives: /archives
+  Resume: /resume
   # 随笔: /tags/随笔
 
 # SubNav
 subnav:
-  github: "github.com/fenixlin"
-  weibo: "weibo.com/fenixl"
-  rss: /atom.xml
-  zhihu: "www.zhihu.com/people/lin-jing-hao-17"
+  github: "https://github.com/fenixlin"
+  weibo: "http://weibo.com/fenixl"
+  #rss: /atom.xml
+  zhihu: "http://www.zhihu.com/people/lin-jing-hao-17"
   #douban: "#"
-  mail: "fenixlin@yandex.com"
+  mail: mailto:fenixlin@yandex.com
   #facebook: "#"
   #google: "#"
   #twitter: "#"
