@@ -13,6 +13,8 @@ hexo clean
 hexo generate
 hexo deploy
 
+# Please ensure line 3 in .git/config is "url = git@github.com:fenixlin/hexo_blog.git", which use SSH authentication, helping you get the correct username.
+
 git add -A
 git commit -a
 git push -u origin master
