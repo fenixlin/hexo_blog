@@ -1,11 +1,11 @@
-title: Algorithms of ACM Contest Summary
+title: ACM Contest Algorithms In 10,000 words
 tags:
   - Algorithm
   - Summary
 date: 2015-03-22 20:55:37
 catagories:
 ---
-*(2015/08/20 更新后缀数组)*
+*(2015/08/21 更新动态规划)*
 
 四五年没有再去好好温习ACM方面的东西了，不过这一块其实时不时还是会提到，姑且做个简陋的算法方面的总结吧~时间精力有限，能总结多少是多少了。
 这里写法同样是"复习用"。[NOCOW](http://www.nocow.cn/index.php/%E9%A6%96%E9%A1%B5)会比我说得更加详细清楚:P
@@ -30,12 +30,11 @@ catagories:
 6.  有依赖的背包：以上问题选用物品要满足依赖关系，依赖关系是一个森林。由于每一个结点及其儿子都有$2^k$种选择，这相当于多次背包的结果再合并的问题。就用树状DP的方法，从叶子开始，每一个结点都进行一次01背包减少选择。
 
 **插头**
-二维平面，对格子之间的连通性有要求，逐格进行状态转移的DP，并且每个格子的状态需要进行压缩。
-压缩方法包括：
-1. 连通的格子用同一标号表示。
-2. 路线不能交叉，标号只用两个就够。
-3. 扩大成使用$2^k$进制，位运算来转移。
-更多介绍见[论文PPT](http://wenku.baidu.com/view/4fe4ac659b6648d7c1c74633.html)
+二维格子平面，和格子之间连通状态有关，逐格进行状态转移的动态规划问题。特点是之前多格连通状态都要考虑，因此需要进行状态压缩。称已决策和未决策格子的分界线为轮廓线，若两个格子相连通则称其公共边为一个插头，然后用一个某进制数S表达轮廓线上插头的连通状态。
+为了让S的进制尽可能小：
+1. 若插头两两匹配且连通路线不交叉，S就可以类似括号序列一样用3进制就够(表达无插头,左插头,右插头)。
+2. 若1的条件不满足，则将连通的插头用同一标号表示。
+若题目允许，S的进制增加到$2^k$就可以位运算来转移加快运算速度。更多介绍见[集训论文](http://wenku.baidu.com/view/4fe4ac659b6648d7c1c74633.html)
 
 **其他常见类型**
 
@@ -43,7 +42,7 @@ catagories:
 *   先后手博弈：考虑状态是先手胜态/后手胜态，一般通过从博弈完结状态开始逆推来建立状态转移方程。（一些问题有数学解，可以通过设计一个函数及一种组合运算，将问题拆分成多个连续的子博弈，分别求得子博弈的函数值，然后通过组合运算得出原博弈解。如NIM博弈可以定义SG函数为后继状态SG函数中未出现的最小自然数，且无法移动的状态SG(x)=0；定义组合运算为异或运算；若SG(x1,x2,..)=0则先手胜。更多变形[参见](http://wenku.baidu.com/link?url=ZLT1itUgpt7dDm2sstOLqnsTdEco3f_t2AMGsZdeuumBd6WKVg-n23VrypW0MUOp6dBDZvaIkSAsN47dM8M6VcF4_FVvDKy86u8wZx-ifGO)。）
 *   树状：从子结点开始归纳状态转移方程。一般一维是节点编号，其余维描述子树状态。
 *   序列/区间/字符串：常以起始位置、连续区间长度作为状态的维度。
-*   矩阵：最大子矩阵 悬线法
+*   矩阵：注重预处理的一类动态规划。典型的如最大子矩阵和(悬线法O(n^2))。
 
 **相关优化**
 
@@ -52,12 +51,12 @@ catagories:
 *   单调队列：一般应用于状态转移中，要求旧状态带有"最大/最小"条件的问题。关键是发现可以抛弃掉的、更老的状态，作为单调队列可抛弃的状态。对于有区间限制的题目，可以将{状态值，状态位置}对建成单调双端队列，左限制右求最值。每次状态转移时就可以从单调队列中提取，而不必往前扫描。没有区间限制求第k大/k小的题目，若发现了可抛弃的状态，亦可构建一个单调序列，用二分查找提取(最长不下降子序列)。[见此总结](http://www.cnblogs.com/neverforget/archive/2011/10/13/ll.html)
 *   数学优化(如四边形不等式)：对于特定形式的状态转移方程，且代价函数满足一定条件的问题，可以限制代码某重循环的上/下界。如四边形不等式优化在代价函数满足四边形不等式及单调性后（形象用四边形记忆，左下加右上<=左上+右下且右下<=左上），可以将$O(n^3)$降至$O(n^2)$。常见于序列上的动态规划。[See.](http://codeforces.com/blog/entry/8219)
 
-最后，以下总结也不错，推荐一下：[Amber](http://adn.botao.hu/?p=7), 
+最后，推荐一下：[Amber的总结](http://adn.botao.hu/?p=7), 
 
 ##树与图论(最短路/生成树等)
 
 **Adjacency List**
-![](http://i57.tinypic.com/2czavls.jpg)
+![](http://i57.tinypic.com/o5rdch.jpg)
 
 **Topological Sort**
 BFS每次向有序序列中加入入度为0的点，并删除所有从它出发的边，若删的时候有边指回已经加入序列的点就有环路。或DFS，递归完时再将点加入有序序列(倒序)，若DFS到已经在DFS里面的点就有环路。一个图可能存在多种拓扑排序结果。
@@ -173,6 +172,7 @@ B(B-)：$M$叉树，根有$[2,\ M]$个儿子，其他内点$[\ \lceil M/2 \rceil
 - DC3算法(Suffix Array)：S最后先加一个间隔符得S'，然后S'[1],S'[2]  (注意S'从0开始)补间隔符至长度是3的倍数后拼在一起得S\*，然后对所有S\*[j:j+2]进行基数排序，这样就得到了S中所有从3j+1和3j+2开始的后缀之间的顺序R。而3j开始的后缀之间的顺序可利用R和第一个字母进行基数排序得出R'。最后通过头字母和R与R'的比较，类似归并排序一样得到全序即可。O(n)，代码复杂度略甚于倍增算法。
 因为后缀树在Trie上存了从任意位置开始的后缀，还为后缀属于哪个字符串做了标识，且Trie又可进行前缀搜索，而任意子串都必定是某后缀的前缀，这样后缀树就囊括了字符串的所有子串。因此可用于查找出现次数/重复次数/最长重复出现/最长回文/最长公共字串(两个字符串连起来做后缀树)等问题上。
 而后缀数组相比后缀树仍缺少了什么路径被压缩了的信息。可以求字典序相邻的两个后缀的最长公共前缀h[i]，这也就是每个后缀在后缀树中的树高。利用性质h[i]>=h[i-1]-1, 限定二重循环扫描确认前缀的范围就可以均摊O(n)求得h[i]。因为任意后缀的最长公共前缀是min{h[i:j]}，相当于LCA问题转化为RMQ问题，后缀树很多类似问题也可以由此推理得解。
+
 **Binary Indexed Tree**
 **Link-Cut Tree**
 
@@ -223,7 +223,7 @@ ACM非常少用到，姑且就当算法课基础复习了
 *   Sunday：同Horspool，唯一不同在于不匹配时跳L[T的对应P最右侧的字母“的下一个字母”]位。
 *   Aho–Corasick(AC自动机)：应用于有多个模式串可匹配的场合。所有模式串先建立一个Trie，每个是模式串结尾的结点都标记一下(方便判断输出什么)，然后BFS遍历Trie，将字母相同的的结点连接起来(也称失败指针)。实际扫描模式串进行匹配时，一旦某一个结点不能继续往下匹配，就根据失败指针转移到另一个根字母相同的子树上继续寻找匹配机会。
 *   Manacher：应用于寻找回文串的O(n)算法。核心思想同样是利用前面寻找回文串时得到的信息。定义p[i]是以i为中心的回文串往一侧延伸的最长长度(就是总长的一半)，就可以分情况如下利用已有信息。另外每个字母间都间插同一个特殊字符，就可以将所有偶数长度的回文串转为奇数长，方便运算。
-![](http://i61.tinypic.com/10sho2e.jpg)
+![](http://i58.tinypic.com/2588q4l.jpg)
 
 **Hash Table**
 
@@ -237,38 +237,27 @@ ACM非常少用到，姑且就当算法课基础复习了
 * Dancing links
 
 **C++ STL**
-虽然STL和算法无关，但是由于STL的存在，很多数据结构不用自己写，是ACM比赛中必备外挂……
+虽然STL和算法无关，但是由于STL的存在，很多数据结构不用自己写，是ACM比赛中必备外挂……下面直接罗列常用的操作。下面注释用大括号表达。
 
-容器：操作包括begin, end, rbegin, rend, erase(,), clear
-**1. 标准序列容器**：
-`list<>` `vector<>` `deque<>`，内存分配分别是连续，小片连续，不连续。
-常用操作（各类略有出入请自行琢磨，下同）: empty, front, back, push\_front(), push\_back(), pop\_front, pop\_back, max\_size, reverse, insert(,,), remove(), remove\_if(), assign(,), swap(), at(), unique, sort
-
-**2. 标准关联容器**：
-`set<>` `multiset<>` `map<,>` `multimap<,>`，对应集合，可重复集合，一对一映射，一对多映射。红黑树实现。
-
-
-**3. 容器适配器**：
-标准序列容器变种，提供受限的底层容器接口，没有迭代器
-`queue<int>` `queue<int,list<int>>`，默认deque作为底层容器，包括操作push,pop,front,back,empty,size
-`priority_queue<int>` `priority_queue<int, vector<int>, greater<int>>`，默认使用vector作为底层容器，包括操作top,push,pop,empty,size
+容器：都有函数empty, size, swap。要求放入的对象实现==和<运算符。
+*   标准序列容器：`list<>` `vector<>` `deque<>`，内存分配分别是连续，小片连续，不连续。常用操作（各类略有出入请自行琢磨，下同）: front, back, push\_front(), push\_back(), pop\_front, pop\_back, max\_size, reverse, insert(,,), remove(), remove\_if(), assign(,), swap(), at(), unique, sort。begin, end, rbegin, rend, erase(,), clear。
+*   标准关联容器：`set<>` `multiset<>` `map<,>` `multimap<,>`，对应集合，可重复集合，一对一映射，一对多映射。都用红黑树实现，效率O(logN)。
+*   容器适配器：标准序列容器变种，提供受限的底层容器接口，没有迭代器。`queue<T>` `queue<T,list<T>>`，默认deque作为底层容器，包括操作push,pop,front,back,empty,size
+`priority_queue<T>` `priority_queue<T, vector<T>, greater<T>>`，默认使用vector作为底层容器，包括操作top,push,pop,empty,size
 `stack<>`
-**4. 似容器**：
-`string<>` `valarray<>` `bitset<>`
-**5. 容器迭代器**：
-`vector<int>::iterator` `vector<int>::const_iterator`
+*   似容器：`string<>` `valarray<>` `bitset<>`
+*   容器迭代器：`vector<T>::iterator` `vector<T>::const_iterator`
 
 算法：
-1. 以下内容需要`#include <algorithm>`
-sort(begin,end,cmp), 相比c的qsort，用的是intro_sort，不会退化
-2. 以下内容需要`#include <functional>`
-greater<> 【待补充】[见这里](http://www.baidu.com/s?ie=utf8&oe=utf8&wd=C%2B%2B%20greater&tn=90128732_hao_pg&ch=2&lans=132),[以及这里](http://wenku.baidu.com/link?url=FQ_M_OG2UgNqJLngZgSQlAeek-0B21j9QoMkvUgrmdq9W1TWoqotNGEvVUuqDn1NdqsBMmntGyyPcsDMj3gVJsLhCRolj2OZxBTnkc0-2Ii)
-less<>
+*   以下内容需要`#include <algorithm>`：sort(begin,end,cmp), 相比c的qsort，用的是intro_sort，不会退化
+*   以下内容需要`#include <functional>`：greater<> 【待补充】[见这里](http://www.baidu.com/s?ie=utf8&oe=utf8&wd=C%2B%2B%20greater&tn=90128732_hao_pg&ch=2&lans=132),[以及这里](http://wenku.baidu.com/link?url=FQ_M_OG2UgNqJLngZgSQlAeek-0B21j9QoMkvUgrmdq9W1TWoqotNGEvVUuqDn1NdqsBMmntGyyPcsDMj3gVJsLhCRolj2OZxBTnkc0-2Ii)、less<>
+
+-----
+
+计划改善中：悬线法动态规划、Binary Indexed Tree、Link-Cut Tree、凸包、哈希、搜索、STL
 
 算法可视化参考：
 https://www.cs.usfca.edu/~galles/visualization/Algorithms.html
-
------
 
 以下是被提到过但是觉得使用频率并不高的算法，或者本人尚不熟悉未能抽出时间学习的算法。因为毕竟退役了，这方面也不能花太多时间深究，因此暂不再进行学习总结，包括：
 Rabin-Karp, Finger Tree, Pair Heap, Blossom算法, Sollin算法, 度限制最小生成树, k小生成树, 均摊时间复杂度的分析方法(potential method), 差分约束系统, 模拟退火, ELFHash, Scapegoat Tree, 后缀树的Ukkeonen方法, 次小生成树/K短路。
