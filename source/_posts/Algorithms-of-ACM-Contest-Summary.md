@@ -100,12 +100,12 @@ BFS每次向有序序列中加入入度为0的点，并删除所有从它出发�
 ---------------
 
 **Prim**
-任意图的最小生成树算法。维护一个数组，记录每个"已到点"连接某个"未到点"的最小边权。循环V次，每次取数组中的最小值，对应边即为最小生成树树枝，对应点加入"已到点"。$O(V^2)$
+任意图的最小生成树算法。维护一个数组，记录每个"已到点"连接某个"未到点"的最小边权。循环V次，每次取数组中的最小值，对应边即为最小生成树树枝，对应点加入"已到点"。O(V^2)
 
-*   也可以用邻接表保存边，维护一个二叉堆而不是数组，但写这个不如写Kruskal。$O((E+V)logV)$
+*   也可以用邻接表保存边，维护一个二叉堆而不是数组，但写这个不如写Kruskal。O((E+V)logV)
 
 **Kruskal**
-任意图的最小生成树算法。边集按权值从小到大排序逐条尝试加入解，并维护一个并查集以保证不形成环路，直到成功加入V-1条边。$O(VlogV+ElogE)$
+任意图的最小生成树算法。边集按权值从小到大排序逐条尝试加入解，并维护一个并查集以保证不形成环路，直到成功加入V-1条边。O(VlogV+ElogE)
 
 ##网络流(二分图匹配等)
 重要定理：最大流=最小割。
@@ -215,12 +215,13 @@ ACM非常少用到，姑且就当算法课基础复习了
 
 **字符串匹配算法**
 
-设模式串P，待匹配串(文本串)T。匹配算法的核心思路都是出现匹配失败时，不要耿直地只移一位然后把匹配过的东西再扫一遍，而是利用对P的预处理，建立跳转表L，匹配失败时根据跳转表进行跳转。
+设模式串P，待匹配串(文本串)T，问P是否是T的子串。匹配算法的核心思路都是出现匹配失败时，不要耿直地只移一位然后把匹配过的东西再扫一遍，而是利用对P的预处理，建立跳转表L，匹配失败时根据跳转表进行跳转。
 *   KMP：思路是失败时，根据当下P已匹配串的后缀和前缀的相等关系跳过一段。L[i]=next[i]=k，每次T和P的第i位匹配失败时，可继续递归匹配P[L[i]]。优化后的KMP算法与L构建举例如图。
 ![](http://i60.tinypic.com/2wd4mrb.jpg)
 *   Boyer-Moore：既考虑T的匹配失败字符(Bad Character)也考虑P的已匹配字符(Good Suffix)。考虑Bad——建二维表L，不匹配就跳至L[T的不匹配字母，在P未匹配部分中且离匹配失败位置最近]。考虑Good——不匹配就跳至L'[已匹配后缀在P中前一个出现的位置且后缀前一个字符(匹配失败位)不相等(若后缀没出现则部分的前缀匹配部分后缀亦可)]。每次跳转max{L, L'}位。[见这里](http://www.ruanyifeng.com/blog/2013/05/boyer-moore_string_search_algorithm.html)
 *   Horspool：L记录所有可能出现字母在与P最右的最小距离。从T左边开始，每次从P的右侧往左匹配，一旦发现不匹配，就跳L[T的对应P最右侧的字母]位，继续匹配。
-*   Sunday：同Horspool，唯一不同在于不匹配时跳L[T的对应P最右侧的字母“的下一个字母”]位。
+*   Sunday：同Horspool，唯一不同在于不匹配时跳L[T的对应P最右侧的字母“的下一个字母”]位(所以最后一个字母也要计入T)。
+以上算法都是单字符串匹配，最坏情况O(nm)，均摊O(n)的算法，一般来说靠下的算法比靠上的算法常数时间上更有优势。下面是其他常见的字符串匹配相关算法：
 *   Aho–Corasick(AC自动机)：应用于有多个模式串可匹配的场合。所有模式串先建立一个Trie，每个是模式串结尾的结点都标记一下(方便判断输出什么)，然后BFS遍历Trie，将字母相同的的结点连接起来(也称失败指针)。实际扫描模式串进行匹配时，一旦某一个结点不能继续往下匹配，就根据失败指针转移到另一个根字母相同的子树上继续寻找匹配机会。
 *   Manacher：应用于寻找回文串的O(n)算法。核心思想同样是利用前面寻找回文串时得到的信息。定义p[i]是以i为中心的回文串往一侧延伸的最长长度(就是总长的一半)，就可以分情况如下利用已有信息。另外每个字母间都间插同一个特殊字符，就可以将所有偶数长度的回文串转为奇数长，方便运算。
 ![](http://i58.tinypic.com/2588q4l.jpg)
@@ -230,34 +231,37 @@ ACM非常少用到，姑且就当算法课基础复习了
 **搜索算法及技巧**
 
 * 二分(折半)查找：顾名思义，不过变种比较多，剩下两个数就可以结束了，记得循环内要先写结束条件，循环后还要判断一下。
-* 深度限制DFS
+* 迭代加深搜索(ID-DFS)
 * 双向BFS
-* A*
+* A\*
+* 迭代加深A\*(IDA\*)
 * 记忆化搜索?
 * Dancing links
 
 **C++ STL**
-虽然STL和算法无关，但是由于STL的存在，很多数据结构不用自己写，是ACM比赛中必备外挂……下面直接罗列常用的操作。下面注释用大括号表达。
+虽然STL和算法无关，但是由于STL的存在，很多数据结构不用自己写，是ACM比赛中必备外挂……下面直接罗列常用的操作。
 
-容器：都有函数empty, size, swap。要求放入的对象实现==和<运算符。
-*   标准序列容器：`list<>` `vector<>` `deque<>`，内存分配分别是连续，小片连续，不连续。常用操作（各类略有出入请自行琢磨，下同）: front, back, push\_front(), push\_back(), pop\_front, pop\_back, max\_size, reverse, insert(,,), remove(), remove\_if(), assign(,), swap(), at(), unique, sort。begin, end, rbegin, rend, erase(,), clear。
-*   标准关联容器：`set<>` `multiset<>` `map<,>` `multimap<,>`，对应集合，可重复集合，一对一映射，一对多映射。都用红黑树实现，效率O(logN)。
-*   容器适配器：标准序列容器变种，提供受限的底层容器接口，没有迭代器。`queue<T>` `queue<T,list<T>>`，默认deque作为底层容器，包括操作push,pop,front,back,empty,size
-`priority_queue<T>` `priority_queue<T, vector<T>, greater<T>>`，默认使用vector作为底层容器，包括操作top,push,pop,empty,size
-`stack<>`
-*   似容器：`string<>` `valarray<>` `bitset<>`
-*   容器迭代器：`vector<T>::iterator` `vector<T>::const_iterator`
+容器：都有函数empty, size, swap。要求放入的对象实现==和<运算符。同一个容器内并没有多线程保护。
+*   标准序列容器：`vector<>` `deque<>`　`list<>`，内存分配分别是连续，小片连续，不连续。三类共有常用操作: begin, end, rbegin, rend, cbegin, cend, crbegin, crend。max\_size, front, back。push\_back, pop\_back, assign(), insert(), emplace(), emplace\_front(), erase(), clear。 get\_allocator。注意不要用vector\<bool\>因为它被压缩为一个元素只占一位，单个元素无法提取而且操作将会很慢(历史原因。至少请以deque替代)。而操作方面，size可能会耗费线性时间，返回的是无符号类型不要随意做减法。
+*   标准关联容器：`set<>` `multiset<>` `map<,>` `multimap<,>`，对应集合，可重复集合，一对一映射，一对多映射。都用红黑树实现，元素有序排列，效率O(logN)。四类共有常用操作：begin, end, rbegin, rend, cbegin, cend, crbegin, crend。max\_size。insert(), emplace(), emplace\_hint(), erase(), clear。key\_comp, value\_comp。find(), count(), lower\_bound(), upper\_bound(), equal\_range()。get\_allocator。
+*   容器适配器：`queue<>` `queue<T,list<T>>` `stack<>` `stack<T,list<T>>` `priority_queue<>` `priority_queue<T, vector<T>, greater<T>>`，标准序列容器变种，提供受限的底层容器接口，没有迭代器。队列和堆栈默认deque作为底层容器，优先队列默认使用vector作为底层容器。共有操作push, pop, emplace。队列还有front, back，其他则是top。
+*   似容器：`string<>` `valarray<>` `bitset<>`，valarray可以直接逐元素进行各种数学操作，bitset则能更好地进行各种位操作。
+*   容器迭代器：`vector<T>::iterator` `vector<T>::const_iterator`，后者不可以改元素值。
+*   其他：`tuple<>` `pair<>`：允许多种类型聚集在一起的定长容器。常见操作make\_tuple/make\_pair，get。tie(拆开tuple)。
 
-算法：
-*   以下内容需要`#include <algorithm>`：sort(begin,end,cmp), 相比c的qsort，用的是intro_sort，不会退化
-*   以下内容需要`#include <functional>`：greater<> 【待补充】[见这里](http://www.baidu.com/s?ie=utf8&oe=utf8&wd=C%2B%2B%20greater&tn=90128732_hao_pg&ch=2&lans=132),[以及这里](http://wenku.baidu.com/link?url=FQ_M_OG2UgNqJLngZgSQlAeek-0B21j9QoMkvUgrmdq9W1TWoqotNGEvVUuqDn1NdqsBMmntGyyPcsDMj3gVJsLhCRolj2OZxBTnkc0-2Ii)、less<>
+常用算法：
+*   来自`<algorithm>`。sort(begin,end,cmp), 相比c的qsort，用的是intro\_sort，不会退化。stable\_sort。transform。unique, shuffle, fill, remove/find/copy/count\_if, all/not\_of, binary\_search, lower/upper\_bound。还有堆化和集合化容器上的操作不赘述。
+*   来自`<functional>`：包括plus,minus,greater等等，用以自定义函数对象，放到algorithm里面用。
 
 -----
 
-计划改善中：悬线法动态规划、Binary Indexed Tree、Link-Cut Tree、凸包、哈希、搜索、STL
+计划改善中：悬线法动态规划、Binary Indexed Tree、Link-Cut Tree、凸包、哈希、搜索
 
 算法可视化参考：
 https://www.cs.usfca.edu/~galles/visualization/Algorithms.html
+
+STL:
+http://wenku.baidu.com/link?url=FQ_M_OG2UgNqJLngZgSQlAeek-0B21j9QoMkvUgrmdq9W1TWoqotNGEvVUuqDn1NdqsBMmntGyyPcsDMj3gVJsLhCRolj2OZxBTnkc0-2Ii
 
 以下是被提到过但是觉得使用频率并不高的算法，或者本人尚不熟悉未能抽出时间学习的算法。因为毕竟退役了，这方面也不能花太多时间深究，因此暂不再进行学习总结，包括：
 Rabin-Karp, Finger Tree, Pair Heap, Blossom算法, Sollin算法, 度限制最小生成树, k小生成树, 均摊时间复杂度的分析方法(potential method), 差分约束系统, 模拟退火, ELFHash, Scapegoat Tree, 后缀树的Ukkeonen方法, 次小生成树/K短路。
