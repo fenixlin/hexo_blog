@@ -44,6 +44,7 @@ $ git checkout -f   #恢复所有文件到上次commit状态
 $ git branch    #查看所在分支
 $ git log    #查看git历史。git reflog可以查看包括删除了的commit。
 $ git cherrypick __commitID__   #将其他分支的commit应用到当前分支。
+$ git rebase	#线上代码和本地代码形成两条路线时，可避免git pull必然带来的merge。如有冲突，修复后git rebase --continue即可。
 ```
 另外，编辑.gitignore可以忽略匹配其某行的文件，对所有人生效。而.git/info/exclude则只是对本开发者生效
 
@@ -55,7 +56,8 @@ $ git cherrypick __commitID__   #将其他分支的commit应用到当前分支�
 安装node.js。下面是官网推荐的方法。
 ``` bash
 $ wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh
-$ sudo nvm install 0.10
+$ nvm ls-remote
+$ nvm install 0.10
 ```
 我好像是以前在nodejs直接下载的。所以也可以下载好之后
 ``` bash
