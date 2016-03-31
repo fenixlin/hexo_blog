@@ -30,21 +30,28 @@ $ git config --global user.email "fenixlin@yandex.com"
 $ git clone https://github.com/fenixlin/hexo_blog
 $ git init
 $ git status	#对比commit看现在修改了什么文件
-$ git pull
+$ git pull      #git pull --rebase可以手动合并线上和现有commit之间的冲突
+$ git add -p    #对多个特性的修改分块commit，y提交n不提交s分割d下个文件
 $ git add -A	#添加所有文件
 $ git commit -a	#如果用--amend就可以补漏，和上一次commit合并
 $ git remote add origin https://github.com/fenixlin/hexo_blog
-$ git remote    #查看已存储的远程git地址
+$ git remote -v    #查看已存储的远程git地址
+$ git config -l    #查看git配置，注意邮箱要和git设置上一致
 $ git push -u origin master
-$ git reset --soft __commitID__		#回滚到__commitID__的commit，之后再git commit -m就好了，新内容也会合并
+$ git reset --soft __commitID__		#回滚到__commitID__的commit，改动退回暂存区，之后再git commit -m就好了，新内容也会合并
+$ git revert HEAD~n #以新commit的方式撤销前面n个commit的改动
 $ git mergetool		#一个用来合并diff的可视化工具
 $ git checkout __branch name__　　　　#切换所在分支(还有创建/比对等功能)
 $ git checkout __file name__    #恢复file到上次commit状态
 $ git checkout -f   #恢复所有文件到上次commit状态
 $ git branch    #查看所在分支
-$ git log    #查看git历史。git reflog可以查看包括删除了的commit。
+$ git log    #查看git历史，--oneline简化--graph图示。git reflog可以查看包括删除了的commit。
 $ git cherrypick __commitID__   #将其他分支的commit应用到当前分支。
 $ git rebase	#线上代码和本地代码形成两条路线时，可避免git pull必然带来的merge。如有冲突，修复后git rebase --continue即可。
+$ git rebase -i HEAD~n #压缩最近n个commit
+$ git blame __file name__   #查看文件每一行最后改动人
+$ git stash #将现有改动放到一边，git stash [list|apply|clear] 查看/恢复/清除
+$ git bisect [start|bad|good]   #在多个commit里面进行二分查找确定引入bug的commit
 ```
 另外，编辑.gitignore可以忽略匹配其某行的文件，对所有人生效。而.git/info/exclude则只是对本开发者生效
 

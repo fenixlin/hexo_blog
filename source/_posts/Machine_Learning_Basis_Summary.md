@@ -1,16 +1,18 @@
-title: Machine Learning (from Coursera) Summary
+title: Machine Learning Lecture & Basis Summary
 tags:
   - Machine Learning
   - Coursera
 date: 2014-10-18 20:55:18
 catagories:
 ---
-*(本文最后修改于2015/3/10)*
+*(本文最后修改于2015/11/17)*
 
-(花了两个月闲暇时间学习的课程，就在这里总结给你看\>v<\!)
-机器学习，主要是通过一个训练过程去优化某个衡量指标(这里称***cost function***)，最终实现与之相关的目标。
-这门课上提到的算法都是静态的。只着眼于一次采样。要通过一次训练尽可能好地拟合真实函数。
-为简洁起见以下不说明任何符号含义，最后才附上说明。
+谨在此总结机器学习的一些基础知识，作为研究生阶段的基础吧，总结来源包括
+1. Machine Learning - Coursera - Andrew Ng
+2. An Introduction to Statistical Learning with Applications in R - Gareth James et. al.
+
+机器学习，主要是训练一个函数模型来对某个目标作出预测，如逼近数据中的response(有监督学习)、表达数据的结构（无监督学习）等。训练过程是不断迭代修改模型参数，来优化某个衡量指标(***cost function***)的过程。
+以下提到的基础算法都是离线的，数据集中每个数据只使用通过一次。
 
 ##有监督学习
 有监督学习可以做分类和估值。
@@ -20,7 +22,7 @@ catagories:
 **线性回归**
 线性回归已经假设真实函数(目标函数)是线性的。
 $h\_\theta(\mathbf{x}\_i) = \boldsymbol{\theta}^T\mathbf{x}\_i$ ， $\mathbf{h\_\theta(X)} = \boldsymbol{X\theta}$
-用到的cost function:
+用到的cost function(加入了后面的惩罚项也称为Ridge Regression):
 $J(\boldsymbol{\theta}) = \frac{1}{2n}(h\_\theta(\mathbf{X})-\mathbf{y})^.2 + \lambda(\boldsymbol{\theta}\_{-0})^.2$
 最优化cost方法1 —— 多次***gradient descent***求解:
 $\boldsymbol{\theta'} = \boldsymbol{\theta}-\alpha\frac{\partial}{\partial\boldsymbol{\theta}}J(\boldsymbol{\theta}) = \boldsymbol{\theta}-\alpha\frac{1}{n}(\mathbf{X}(h\_\theta(\mathbf{X})-\mathbf{y})+\lambda\boldsymbol{\theta}\_{-0})$
@@ -49,8 +51,9 @@ $p(\mathbf{x};\boldsymbol{\mu,\Sigma}) = \frac{1}{(2\pi)^{\frac{n}{2}}|\boldsymb
 公开课里面是用Anomaly Detection这个大例子带出的，$p(\mathbf{x};\boldsymbol{\mu,\Sigma})<\epsilon$为异常。应用于异常例子相当少的情况（类似工业界6$\sigma$保证）。应对方法是训练集全是“正常”。cv集有少部分“异常”，以训练合适的置信度参数$\epsilon$。
 
 **Support Vector Machine**
-SVM本身是建立在线性分类器上的。不过相较于逻辑回归用的sigmoid函数，SVM在超过一定界限就会直接为0了。类似：
+SVM本身是建立在线性分类器上的。不过相较于逻辑回归用的sigmoid函数，SVM使用的核函数叫ReLU，超过一定界限就会直接为0了。类似：
 $cost\_0(\boldsymbol{\theta}^T\mathbf{x}\_i) = \boldsymbol{\theta}^T\mathbf{x}\le{-1}\ ?\ -(\boldsymbol{\theta}^T\mathbf{x}+1)：0$。
+![](http://i57.tinypic.com/w6xqt.jpg)
 用到的总cost function：
 $J(\boldsymbol{\theta}) = -C\[\mathbf{y}^Tcost\_0(\boldsymbol{\theta}^Tf(\mathbf{x}))+(\mathbf{1-y})^Tcost\_1(\boldsymbol{\theta}^Tf(\mathbf{x}))\] + \frac{\lambda}{2}\(\boldsymbol{\theta}\_{-0})^{.2}$
 这样相比于逻辑回归，可以保证分类的分界线与所分两类的距离最大(又称Large Margin Classifier)
@@ -141,13 +144,14 @@ k应该选择满足$\frac{\frac{1}{n}\sum\_{i=1}^n|x^{(i)}-x\_{approx}^{(i)}|^2}
 **对算法作评估及后续调整**
 从训练集中：
 取出一部分作为test set。以客观评估算法，预测在真实大规模数据中的准确度/置信度。
-取出一部分作为cross validation set，如果除了训练以外还有东西要选择的话。如不同的超参、特征个数、模型等等。
+取出一部分作为cross validation set，如果除了训练以外还有东西要选择的话。如不同的超参、特征个数、模型等等。（此外，训练数据少或担心CV分割的随机性时还有训练集中每次拿出一个数据做CV集循环多次的LOOCV方法；还有折中的分成k份每次拿一份循环多次的k-fold方法，既考虑速度也考虑了效果）
 ***
 一般的指标有方差等，统计学方面还有$R^2$，F检验等。
 还有指标$Accuracy = \frac{所有分类准确的预测个数}{总样本个数}$
 对于训练集中函数值偏向比较严重的情况(如分类中大多偏向于某一类)：
-定义$Precison = \frac{某分类准确的预测个数}{同一分类的预测个数}$，$Recall=\frac{某分类准确的预测个数}{同一分类的实际样本个数}$（可理解为命中率和发现率），这两个没法做到同时很高
+定义$Precison = \frac{准确的正例预测个数}{所有预测为正例的个数}$，$Recall=\frac{准确的正例预测个数}{正例的实际样本个数}$（可理解为命中率和发现率），这两个没法做到同时很高
 所以可以用$F\_1 = 2\frac{PR}{P+R}$进行评估
+也经常会对Precision-Recall曲线，以及ROC曲线(Precision-FPR(即负例Precision))进行分析。
 ***
 如果误差很大，排除模型的问题，除了调整超参（可训练参数之上的参数如$\lambda$），还可以尝试以下方法：
 Overfitting(高variance): 去除冗余特征，获取更多训练集
